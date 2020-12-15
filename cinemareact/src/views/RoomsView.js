@@ -1,9 +1,10 @@
 import React from 'react';
+import Navigation from '../components/Navigation';
 
 function RoomsView() {
 	return (
 		<div>
-			{/* navigation */}
+			<Navigation />
 			<h1>Sale kinowe</h1>
 			{/* rooms list */}
 		</div>

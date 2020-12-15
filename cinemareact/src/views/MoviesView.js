@@ -1,9 +1,10 @@
 import React from 'react';
+import Navigation from '../components/Navigation';
 
 function MoviesView() {
 	return (
 		<div>
-			{/* navigation */}
+			<Navigation />
 			<h1>Dostępne filmy</h1>
 			{/* movies list */}
 		</div>
