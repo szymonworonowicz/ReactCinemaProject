@@ -81,8 +81,8 @@ namespace NetCoreAPI.Controllers
             return BadRequest("Film istnieje juz w bazie");
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> deleteFilm(int? id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> deleteFilm([FromRoute]int? id)
         {
             if (id.HasValue)
             {
