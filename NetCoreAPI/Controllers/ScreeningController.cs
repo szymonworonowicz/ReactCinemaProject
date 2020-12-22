@@ -31,17 +31,17 @@ namespace NetCoreAPI.Controllers
             return BadRequest("Nie ma zadnego seansu w bazie");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> getScreenings(int? id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> getScreenings([FromRoute] int id)
         {
             if (await Context.Screenings.AnyAsync())
             {
-                if (id.HasValue)
+                if (id !=0)
                 {
                     var screenings = Context.Screenings.Include(x => x.Film)
                                                         .Include(x => x.Hall)
                                                         .Include(x => x.Tickets)
-                                                        .FirstOrDefaultAsync(x => x.Id == id.Value);
+                                                        .FirstOrDefaultAsync(x => x.Id == id);
 
                     return Ok(new { screenings = screenings });
 
