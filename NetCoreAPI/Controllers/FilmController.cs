@@ -28,12 +28,12 @@ namespace NetCoreAPI.Controllers
             return BadRequest("Brak filmów w bazie");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> getFilm([FromBody]int? id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> getFilm([FromRoute] int id)
         {
-            if (id.HasValue == true)
+            if (id !=0)
             {
-                var films = await Context.Films.Include(x => x.Screenings).FirstOrDefaultAsync(x => x.Id == id.Value);
+                var films = await Context.Films.Include(x => x.Screenings).FirstOrDefaultAsync(x => x.Id == id);
 
                 if (films != null)
                 {
