@@ -1,6 +1,16 @@
 import axios from 'axios';
 import * as filmActions from './filmTypes';
 
+// this have fixed cors issuses
+const instance = axios.create({
+    baseURL: "http://localhost:5000",
+    withCredentials: false,
+    headers: {
+      'Access-Control-Allow-Origin' : '*',
+      'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+      }
+});
+
 // these are not necessary, but async action will look cleaner thanks to them
 // parenthesis are necessary when you want to return an object like this (without explicitly writing return)
 const getFilmsRequest = () => ({
@@ -22,10 +32,10 @@ export const getFilms = () => {
     return function(dispatch) {
         dispatch(getFilmsRequest());
 
-        axios.get('http://localhost:5000/film')
+        instance.get('http://localhost:5000/film')
             .then(resp => {
-                const { data } = resp; // shorthand for const data = resp.data;
-                dispatch(getFilmsSuccess(data));
+                const { films } = resp.data; // shorthand for const data = resp.data;
+                dispatch(getFilmsSuccess(films));
             })
             .catch(err => {
                 const { message } = err;
@@ -54,7 +64,7 @@ export const addFilm = film => {
 
         dispatch(addFilmRequest());
         // @TODO check if headers are needed
-        axios.post('http:localhost:5000/film', {
+        instance.post('http:localhost:5000/film', {
             title, // shorthand for title: title
             time,
             director,
@@ -89,7 +99,7 @@ export const deleteFilm = id => {
     return function(dispatch) {
         dispatch(deleteFilmRequest());
 
-        axios.delete(`http://localhost:5000/film/${id}`)
+        instance.delete(`http://localhost:5000/film/${id}`)
             .then(() => {
                 dispatch(deleteFilmSuccess(id));
             })
@@ -119,7 +129,7 @@ export const updateFilm = updatedFilm => {
         dispatch(updateFilmRequest());
 
         // not sure whether this is a good way
-        axios.put('http://localhost:5000', {
+        instance.put('http://localhost:5000', {
             updatedFilm
         })
         .then(() => {
