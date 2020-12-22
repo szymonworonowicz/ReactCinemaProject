@@ -29,7 +29,7 @@ namespace NetCoreAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> getFilm(int? id)
+        public async Task<IActionResult> getFilm([FromBody]int? id)
         {
             if (id.HasValue == true)
             {
