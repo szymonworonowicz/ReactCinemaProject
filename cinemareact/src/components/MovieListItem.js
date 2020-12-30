@@ -12,6 +12,7 @@ function MovieListItem(props) {
 
 MovieListItem.propTypes = {
     film: PropTypes.shape({
+        // maybe here we can add custom props function to check for minimal length or smth like this
         id: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired,
         time: PropTypes.number.isRequired,
