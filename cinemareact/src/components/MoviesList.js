@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { List } from '@material-ui/core';
 import { getFilms } from '../redux/film/filmActions';
 import MovieListItem from './MovieListItem';
 import Loader from './Loader';
@@ -18,11 +19,11 @@ function MoviesList() {
     if(error) return <p>Error: {error}</p>
 
     return (
-        <ul>
+        <List>
             {films.map(film => (
                 <MovieListItem key={film.id} film={film} />
             ))}
-        </ul>
+        </List>
     );
 }
 

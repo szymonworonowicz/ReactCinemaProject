@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ListItem } from '@material-ui/core';
 
 function MovieListItem(props) {
     const { film } = props;
 
     // this needs improving of course
     return (
-        <li>{film.title}</li>
+        <ListItem>{film.title}</ListItem>
     );
 }
 
