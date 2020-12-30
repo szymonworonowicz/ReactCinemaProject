@@ -5,6 +5,14 @@ import { getFilms } from '../redux/film/filmActions';
 import MovieListItem from './MovieListItem';
 import Loader from './Loader';
 
+const ListStyle = {
+    paddingLeft: '0',
+    margin: '32px 0',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+}
+
 function MoviesList() {
     // this grabs these values from redux state
     const { loading, films, error } = useSelector(state => state.filmsState);
@@ -19,7 +27,7 @@ function MoviesList() {
     if(error) return <p>Error: {error}</p>
 
     return (
-        <List>
+        <List style={ListStyle}>
             {films.map(film => (
                 <MovieListItem key={film.id} film={film} />
             ))}
