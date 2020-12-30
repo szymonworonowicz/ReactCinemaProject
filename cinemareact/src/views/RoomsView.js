@@ -1,13 +1,16 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
+import { Container } from '@material-ui/core';
 
 function RoomsView() {
 	return (
-		<div>
+		<>
 			<Navigation />
-			<h1>Sale kinowe</h1>
-			{/* rooms list */}
-		</div>
+			<Container maxWidth="lg">
+				<h1>Sale kinowe</h1>
+				{/* rooms list */}
+			</Container>
+		</>
 	);
 }
 
