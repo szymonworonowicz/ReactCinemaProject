@@ -1,6 +1,6 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
-import { Container } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 
 function SeanceDetailsView(props) {
 	const id = props.match.params.id;
@@ -9,7 +9,11 @@ function SeanceDetailsView(props) {
 		<>
 			<Navigation />
 			<Container maxWidth="lg">
-				<h1>Szczegóły seansu numer {id}</h1>
+				<Typography variant="h4" component="h1" style={{
+					padding: '24px 0',
+					borderBottom: '1px solid #DDD',
+					textTransform: 'uppercase'
+				}}>Szczegóły seansu numer {id}</Typography>
 				{/* seance details */}
 				{/* buy ticket form	*/}
 			</Container>
