@@ -75,7 +75,7 @@ namespace NetCoreAPI.Controllers
 
                 await Context.SaveChangesAsync();
 
-                return StatusCode(201);
+                return StatusCode(201,new {film = film});
             }
 
             return BadRequest("Film istnieje juz w bazie");

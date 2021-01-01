@@ -78,7 +78,7 @@ export const addFilm = film => {
         })
         .then(resp => {
             const { data } = resp;
-            dispatch(addFilmSuccess(data));
+            dispatch(addFilmSuccess(JSON.stringify(data)));
         })
         .catch(err => {
             const { message } = err;
