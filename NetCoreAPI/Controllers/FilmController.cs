@@ -46,7 +46,7 @@ namespace NetCoreAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> updateFilm(Film film)
+        public async Task<IActionResult> updateFilm([FromBody]Film film)
         {
             if (await Context.Films.AnyAsync(x => x.Id == film.Id))
             {
