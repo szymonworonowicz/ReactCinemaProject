@@ -52,7 +52,7 @@ namespace NetCoreAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> addScreening(Screening screening)
+        public async Task<IActionResult> addScreening([FromBody]Screening screening)
         {
             if (await Context.Screenings.AnyAsync(x => x.StartTime == screening.StartTime) == false)
             {
@@ -67,7 +67,7 @@ namespace NetCoreAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> updateScreening(Screening screening)
+        public async Task<IActionResult> updateScreening([FromBody]Screening screening)
         {
             if(await Context.Screenings.AnyAsync( x => x.Id == screening.Id)) 
             {
