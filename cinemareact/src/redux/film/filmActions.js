@@ -1,9 +1,11 @@
 import axios from 'axios';
 import * as filmActions from './filmTypes';
 
+require('dotenv').config({ path: '../../../' });
+
 // this have fixed cors issuses
 const instance = axios.create({
-    baseURL: "http://localhost:5000",
+    //baseURL: "http://localhost:5000",
     withCredentials: false,
     headers: {
       'Access-Control-Allow-Origin' : '*',
@@ -63,12 +65,16 @@ export const addFilm = film => {
         const { title, time, director, description } = film;
 
         dispatch(addFilmRequest());
-        // @TODO check if headers are needed
-        instance.post('http:localhost:5000/film', {
-            title, // shorthand for title: title
-            time,
-            director,
-            description,
+        console.log(process.env.REACT_APP_SERVER_BASE_URL);
+        instance({
+            method: 'post',
+            url: `${process.env.REACT_APP_SERVER_BASE_URL}/film`,
+            body: {
+                title,
+                time,
+                director,
+                description,
+            }
         })
         .then(resp => {
             const { data } = resp;
