@@ -34,10 +34,9 @@ function MovieForm(props) {
     });
 
     const handleSubmit = values => {
-        console.log(values);
         dispatch(addFilm(values));
 
-        // closeModalFn();
+        closeModalFn();
     }
 
     return (

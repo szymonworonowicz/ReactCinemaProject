@@ -65,20 +65,16 @@ export const addFilm = film => {
         const { title, time, director, description } = film;
 
         dispatch(addFilmRequest());
-        console.log(process.env.REACT_APP_SERVER_BASE_URL);
-        instance({
-            method: 'post',
-            url: `${process.env.REACT_APP_SERVER_BASE_URL}/film`,
-            body: {
-                title,
-                time,
-                director,
-                description,
-            }
+        instance.post(`${process.env.REACT_APP_SERVER_BASE_URL}/film`, {
+            title,
+            time,
+            director,
+            description,
         })
         .then(resp => {
             const { data } = resp;
-            dispatch(addFilmSuccess(JSON.stringify(data)));
+            const finalData = JSON.parse(JSON.stringify(data)).film;
+            dispatch(addFilmSuccess(finalData));
         })
         .catch(err => {
             const { message } = err;
