@@ -67,7 +67,7 @@ namespace NetCoreAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> addFilm(Film film)
+        public async Task<IActionResult> addFilm([FromBody]Film film)
         {
             if (await Context.Films.AnyAsync(x => x.Title == film.Title) == false)
             {

@@ -18,7 +18,7 @@ namespace NetCoreAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> buyTicket(Ticket ticket)
+        public async Task<IActionResult> buyTicket([FromBody]Ticket ticket)
         {
             if (await Context.Tickets.AnyAsync(x => x.Seeting == ticket.Seeting && x.ScreeningID == ticket.ScreeningID) == false) 
             {
