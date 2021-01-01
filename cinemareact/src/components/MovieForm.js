@@ -34,15 +34,10 @@ function MovieForm(props) {
     });
 
     const handleSubmit = values => {
-        closeModalFn();
+        console.log(values);
+        dispatch(addFilm(values));
 
-        const newMovie = {
-            title: values.title,
-            time: values.time,
-            director: values.director,
-            description: values.description,
-        };
-        dispatch(addFilm(newMovie));
+        // closeModalFn();
     }
 
     return (
@@ -112,7 +107,7 @@ MovieForm.propTypes = {
 MovieForm.defaultProps = {
     film: {
         title: '',
-        time: undefined,
+        time: 0,
         director: '',
         description: '',
     },
