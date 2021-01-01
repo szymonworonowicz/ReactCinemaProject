@@ -25,6 +25,7 @@ namespace NetCoreAPI.Controllers
                 await Context.Tickets.AddAsync(ticket);
 
                 await Context.SaveChangesAsync();
+                return StatusCode(201,new {ticket = ticket});
             }
 
             return BadRequest("Dany bilet juz istnieje");

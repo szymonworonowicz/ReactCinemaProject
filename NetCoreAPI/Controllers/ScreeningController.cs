@@ -60,7 +60,7 @@ namespace NetCoreAPI.Controllers
 
                 await Context.SaveChangesAsync();
 
-                return StatusCode(201);
+                return StatusCode(201,new {screening = screening});
             }
 
             return BadRequest("Seans istnieje w bazie");
