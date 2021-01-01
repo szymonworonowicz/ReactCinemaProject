@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { Formik, Form } from 'formik';
 // this is just styled input fields
 import { FormikTextField } from 'formik-material-fields';
@@ -16,6 +17,7 @@ const FormStyle = {
 
 function MovieForm(props) {
     const { film, closeModalFn } = props;
+    const dispatch = useDispatch();
 
     const initialValues = {
         title: film.title,
@@ -26,8 +28,7 @@ function MovieForm(props) {
 
     const validationSchema = Yup.object({
         title: Yup.string().required('Required'),
-        // TODO: minmax validation
-        time: Yup.number().required('Required'),
+        time: Yup.number().positive('Time cannot be a negative number').required('Required'),
         director: Yup.string().required('Required'),
         description: Yup.string().required('Required'),
     });
@@ -35,11 +36,14 @@ function MovieForm(props) {
     const handleSubmit = values => {
         closeModalFn();
 
-        // TODO: dispatch redux action for adding film
-        console.log(values);
+        const newMovie = {
+            title: values.title,
+            time: values.time,
+            director: values.director,
+            description: values.description,
+        };
+        dispatch(addFilm(newMovie));
     }
-
-    console.log(initialValues);
 
     return (
         <Formik
@@ -108,7 +112,7 @@ MovieForm.propTypes = {
 MovieForm.defaultProps = {
     film: {
         title: '',
-        time: 0,
+        time: undefined,
         director: '',
         description: '',
     },
