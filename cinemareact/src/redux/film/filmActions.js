@@ -131,7 +131,7 @@ export const updateFilm = updatedFilm => {
         dispatch(updateFilmRequest());
 
         // not sure whether this is a good way
-        instance.put('http://localhost:5000', {
+        instance.put('http://localhost:5000/film', {
             updatedFilm
         })
         .then(() => {
