@@ -65,6 +65,8 @@ export const addFilm = film => {
         const { title, time, director, description } = film;
 
         dispatch(addFilmRequest());
+        // using env variables solves this issuse
+        // https://stackoverflow.com/questions/53812984/react-axios-appends-window-origin-to-provided-url-json-server
         instance.post(`${process.env.REACT_APP_SERVER_BASE_URL}/film`, {
             title,
             time,
@@ -130,9 +132,8 @@ export const updateFilm = updatedFilm => {
     return function(dispatch) {
         dispatch(updateFilmRequest());
 
-        // not sure whether this is a good way
         instance.put('http://localhost:5000/film', {
-            updatedFilm
+            ...updatedFilm
         })
         .then(() => {
             dispatch(updateFilmSuccess(updatedFilm));
