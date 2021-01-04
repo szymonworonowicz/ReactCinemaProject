@@ -9,7 +9,7 @@ const linkStyle = {
 
 function Navigation() {
 	return (
-		<AppBar position="static">
+		<AppBar position="sticky">
 			<Toolbar>
 				<Button color="inherit">
 					<Link to="/" style={linkStyle}>Seanse</Link>
