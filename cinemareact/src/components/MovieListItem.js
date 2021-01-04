@@ -32,6 +32,10 @@ class MovieListItem extends React.Component {
     deleteMovie = () => {
         this.props.deleteFilmFn(this.props.film.id);
     }
+
+    editMovie = () => {
+        this.props.changeFormValuesFn(this.props.film);
+    }
     
     render() {
         const { film } = this.props;
@@ -71,7 +75,10 @@ class MovieListItem extends React.Component {
                         }}
                     >
                         <div style={{ display: 'flex', flexDirection: 'column', padding: '8px' }}>
-                            <Button style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                            <Button 
+                                style={{ display: 'flex', justifyContent: 'flex-start' }}
+                                onClick={this.editMovie}
+                            >
                                 <Edit/>
                                 <span style={{ marginLeft: '8px' }}>Edytuj</span>
                             </Button>
@@ -98,6 +105,8 @@ const mapDispatchToProps = dispatch => {
 }
 
 MovieListItem.propTypes = {
+    changeFormValuesFn: PropTypes.func.isRequired,
+    deleteFilmFn: PropTypes.func.isRequired,
     film: PropTypes.shape({
         // maybe here we can add custom props function to check for minimal length or smth like this
         id: PropTypes.number.isRequired,

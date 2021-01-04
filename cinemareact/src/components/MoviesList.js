@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { List } from '@material-ui/core';
 import { getFilms } from '../redux/film/filmActions';
@@ -13,10 +14,11 @@ const ListStyle = {
     justifyContent: 'space-between',
 }
 
-function MoviesList() {
+function MoviesList(props) {
     // this grabs these values from redux state
     const { loading, films, error } = useSelector(state => state.filmsState);
     const dispatch = useDispatch();
+    const { changeFormValuesFn } = props;
 
     useEffect(() => {
         dispatch(getFilms());
@@ -29,10 +31,18 @@ function MoviesList() {
     return (
         <List style={ListStyle}>
             {films.map(film => (
-                <MovieListItem key={film.id} film={film} />
+                <MovieListItem 
+                    key={film.id}
+                    film={film}
+                    changeFormValuesFn={changeFormValuesFn}
+                />
             ))}
         </List>
     );
 }
+
+MoviesList.propTypes = {
+    changeFormValuesFn: PropTypes.func.isRequired,
+};
 
 export default MoviesList;

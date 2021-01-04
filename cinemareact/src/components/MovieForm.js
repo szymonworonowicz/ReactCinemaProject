@@ -6,7 +6,9 @@ import { Formik, Form } from 'formik';
 import { FormikTextField } from 'formik-material-fields';
 import { Button } from '@material-ui/core'
 import * as Yup from 'yup';
-import { addFilm } from '../redux/film/filmActions';
+import { addFilm, updateFilm } from '../redux/film/filmActions';
+
+const isObjectEmpty = obj => Object.keys(obj).length === 0;
 
 const FormStyle = {
     marginBottom: '16px',
@@ -34,7 +36,16 @@ function MovieForm(props) {
     });
 
     const handleSubmit = values => {
-        dispatch(addFilm(values));
+        if(isObjectEmpty(film)) {
+            dispatch(addFilm(values));
+        } else {
+            const updatedFilm = {
+                ...film,
+                ...values,
+            };
+
+            // dispatch(updateFilm(updatedFilm));
+        }
 
         closeModalFn();
     }

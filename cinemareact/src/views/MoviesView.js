@@ -5,6 +5,8 @@ import MovieForm from '../components/MovieForm';
 import Navigation from '../components/Navigation';
 import MoviesList from '../components/MoviesList';
 
+const isObjectEmpty = obj => Object.keys(obj).length === 0;
+
 const FabStyle = {
 	position: 'fixed',
 	bottom: '32px',
@@ -14,18 +16,35 @@ const FabStyle = {
 class MoviesView extends React.Component {
 	state = {
 		openModal: false,
+		formInitValues: {},
 	};
 
 	closeModal = () => {
 		this.setState({
 			openModal: false,
+			formInitValues: {},
 		});
 	}
 
-	openModal = () => {
+	openModal = (newFilm = true) => {
+		if(newFilm) {
+			this.setState({
+				openModal: true,
+				formInitValues: {}
+			});
+		} else {
+			this.setState({
+				openModal: true,
+			});
+		}
+	}
+
+	changeFormInitValues = newValues => {
 		this.setState({
-			openModal: true,
+			formInitValues: newValues,
 		});
+		
+		this.openModal(false);
 	}
 
 	render() {
@@ -38,9 +57,12 @@ class MoviesView extends React.Component {
 					onBackdropClick={this.closeModal}
 					onEscapeKeyDown={this.closeModal}
 				>
-					<DialogTitle>Dodaj film</DialogTitle>
+					<DialogTitle>{isObjectEmpty(this.state.formInitValues) ? 'Dodaj Film' : 'Edytuj Film'}</DialogTitle>
 					<DialogContent>
-						<MovieForm closeModalFn={this.closeModal} />
+						<MovieForm
+							closeModalFn={this.closeModal}
+							film={this.state.formInitValues}
+						/>
 					</DialogContent>
 				</Dialog>
 	
@@ -53,7 +75,7 @@ class MoviesView extends React.Component {
 						textTransform: 'uppercase'
 					}}>Dostępne filmy</Typography>
 	
-					<MoviesList />
+					<MoviesList changeFormValuesFn={this.changeFormInitValues} />
 	
 					<Fab
 						onClick={this.openModal}
