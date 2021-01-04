@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Card, CardHeader, CardContent, Typography, IconButton, Button, Popover } from '@material-ui/core';
 import { MoreVert, Edit, Delete } from '@material-ui/icons';
+import { deleteFilm } from '../redux/film/filmActions';
 
 const CardStyle = {
     flexBasis: '45%',
@@ -16,7 +18,6 @@ class MovieListItem extends React.Component {
     }
 
     handleClick = e => {
-        console.log(e.currentTarget);
         this.setState({
             anchorEl: e.currentTarget,
         });
@@ -26,6 +27,10 @@ class MovieListItem extends React.Component {
         this.setState({
             anchorEl: null,
         });
+    }
+
+    deleteMovie = () => {
+        this.props.deleteFilmFn(this.props.film.id);
     }
     
     render() {
@@ -70,7 +75,10 @@ class MovieListItem extends React.Component {
                                 <Edit/>
                                 <span style={{ marginLeft: '8px' }}>Edytuj</span>
                             </Button>
-                            <Button style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                            <Button 
+                                style={{ display: 'flex', justifyContent: 'flex-start' }}
+                                onClick={this.deleteMovie}
+                            >
                                 <Delete />
                                 <span style={{ marginLeft: '8px' }}>Usuń</span>
                             </Button>
@@ -81,6 +89,12 @@ class MovieListItem extends React.Component {
         );
 
     }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        deleteFilmFn: id => dispatch(deleteFilm(id)),
+    };
 }
 
 MovieListItem.propTypes = {
@@ -94,4 +108,4 @@ MovieListItem.propTypes = {
     }),
 };
 
-export default MovieListItem;
+export default connect(null, mapDispatchToProps)(MovieListItem);
