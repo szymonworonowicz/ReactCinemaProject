@@ -44,7 +44,7 @@ function MovieForm(props) {
                 ...values,
             };
 
-            // dispatch(updateFilm(updatedFilm));
+            dispatch(updateFilm(updatedFilm));
         }
 
         closeModalFn();
