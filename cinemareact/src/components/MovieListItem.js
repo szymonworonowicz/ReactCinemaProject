@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardHeader, CardContent, Typography } from '@material-ui/core';
+import { Card, CardHeader, CardContent, Typography, IconButton, Button, Popover } from '@material-ui/core';
+import { MoreVert, Edit, Delete } from '@material-ui/icons';
 
 const CardStyle = {
     flexBasis: '45%',
@@ -8,26 +9,78 @@ const CardStyle = {
     marginBottom: '64px',
 };
 
-function MovieListItem(props) {
-    const { film } = props;
+class MovieListItem extends React.Component {
+    state = {
+        // this is from the material-ui docs
+        anchorEl: null
+    }
 
-    // this needs improving of course
-    return (
-        <Card style={CardStyle}>
-            <CardHeader 
-                title={film.title} 
-                subheader={film.director}
-                style={{
-                    marginBottom: '0',
-                    paddingBottom: '0'
-                }}
-            />
-            <CardContent style={{ marginTop: '0' }}>
-                <Typography variant="body1" style={{ marginBottom: '16px' }}>Czas trwania: {film.time} minut</Typography>
-                <Typography variant="body1">{film.description}</Typography>
-            </CardContent>
-        </Card>
-    );
+    handleClick = e => {
+        console.log(e.currentTarget);
+        this.setState({
+            anchorEl: e.currentTarget,
+        });
+    }
+
+    handleClose = () => {
+        this.setState({
+            anchorEl: null,
+        });
+    }
+    
+    render() {
+        const { film } = this.props;
+    
+        // this needs improving of course
+        return (
+            <Card style={CardStyle}>
+                <CardHeader 
+                    title={
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Typography variant="h5">{film.title}</Typography>
+                            <IconButton onClick={this.handleClick}>
+                                <MoreVert/>
+                            </IconButton>
+                        </div>
+                    } 
+                    subheader={film.director}
+                    style={{
+                        marginBottom: '0',
+                        paddingBottom: '0'
+                    }}
+                />
+                <CardContent style={{ marginTop: '0' }}>
+                    <Typography variant="body1" style={{ marginBottom: '16px' }}>Czas trwania: {film.time} minut</Typography>
+                    <Typography variant="body1">{film.description}</Typography>
+                    <Popover
+                        open={this.state.anchorEl !== null}
+                        anchorEl={this.state.anchorEl}
+                        onClose={this.handleClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center'
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center'
+                        }}
+                    >
+                        <div style={{ display: 'flex', flexDirection: 'column', padding: '8px' }}>
+                            <Button style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                                <Edit/>
+                                <span style={{ marginLeft: '8px' }}>Edytuj</span>
+                            </Button>
+                            <Button style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                                <Delete />
+                                <span style={{ marginLeft: '8px' }}>Usuń</span>
+                            </Button>
+                        </div>
+                    </Popover>
+                </CardContent>
+            </Card>
+        );
+
+    }
 }
 
 MovieListItem.propTypes = {
