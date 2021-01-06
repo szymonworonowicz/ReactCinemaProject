@@ -62,15 +62,15 @@ const addScreeningFailure = error => ({
 
 export const addScreening = screening => {
     return function(dispatch) {
-        const { StartTime, FilmId, HallId} = screening;
+        const { time, filmId, hallId} = screening;
 
         dispatch(addScreeningRequest());
         // using env variables solves this issuse
         // https://stackoverflow.com/questions/53812984/react-axios-appends-window-origin-to-provided-url-json-server
         instance.post(`${process.env.REACT_APP_SERVER_BASE_URL}/screening`, {
-            StartTime,
-            FilmId,
-            HallId,
+            StartTime: time,
+            FilmId: parseInt(filmId),
+            HallId: parseInt(hallId),
         })
         .then(resp => {
             const { data } = resp;

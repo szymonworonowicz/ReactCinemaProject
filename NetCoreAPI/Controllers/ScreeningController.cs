@@ -43,6 +43,8 @@ namespace NetCoreAPI.Controllers
                                                     .Include(x => x.Tickets)
                                                     .FirstOrDefaultAsync(x => x.Id == id);
 
+                
+
                 return Ok(new { screening = screening });
 
             }
@@ -59,8 +61,9 @@ namespace NetCoreAPI.Controllers
             await Context.Screenings.AddAsync(screening);
 
             await Context.SaveChangesAsync();
+            var addedScreening = await Context.Screenings.Include(x => x.Hall).Include(x => x.Film).FirstOrDefaultAsync(x => x.Id == screening.Id);
 
-            return StatusCode(201, new { screening = screening });
+            return StatusCode(201, new { screening = addedScreening });
         }
 
         return BadRequest("Seans istnieje w bazie");
