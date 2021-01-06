@@ -16,16 +16,16 @@ const instance = axios.create({
 // these are not necessary, but async action will look cleaner thanks to them
 // parenthesis are necessary when you want to return an object like this (without explicitly writing return)
 const getScreeningsRequest = () => ({
-    type: screeningActions.GET_FILMS_REQUEST,
+    type: screeningActions.GET_SCREENINGS_REQUEST,
 });
 
 const getScreeningsSuccess = screenings => ({
-    type: screeningActions.GET_FILMS_SUCCES,
+    type: screeningActions.GET_SCREENINGS_SUCCES,
     payload: screenings,
 });
 
 const getScreeningsFailure = error => ({
-    type: screeningActions.GET_FILMS_FAILURE,
+    type: screeningActions.GET_SCREENINGS_FAILURE,
     payload: error,
 });
 
@@ -47,16 +47,16 @@ export const getScreenings = () => {
 }
 
 const addScreeningRequest = () => ({
-    type: screeningActions.ADD_FILM_REQUEST,
+    type: screeningActions.ADD_SCREENING_REQUEST,
 });
 
-const addScreeningSuccess = film => ({
-    type: screeningActions.ADD_FILM_SUCCESS,
-    payload: film,
+const addScreeningSuccess = screening => ({
+    type: screeningActions.ADD_SCREENING_SUCCESS,
+    payload: screening,
 });
 
 const addScreeningFailure = error => ({
-    type: screeningActions.ADD_FILM_FAILURE,
+    type: screeningActions.ADD_SCREENING_FAILURE,
     payload: error,
 });
 
@@ -85,16 +85,16 @@ export const addScreening = screening => {
 }
 
 const updateScreeningRequest = () => ({
-    type: screeningActions.UPDATE_FILM_REQUEST,
+    type: screeningActions.UPDATE_SCREENING_REQUEST,
 });
 
 const updateScreeningSuccess = updatedScreening => ({
-    type: screeningActions.UPDATE_FILM_SUCCESS,
+    type: screeningActions.UPDATE_SCREENING_SUCCESS,
     payload: updatedScreening,
 });
 
 const updateScreeningFailure = error => ({
-    type: screeningActions.UPDATE_FILM_FAILURE,
+    type: screeningActions.UPDATE_SCREENING_FAILURE,
     payload: error,
 });
 
