@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {useSelector, useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { getFilms } from '../redux/film/filmActions';
+import { getHalls } from '../redux/halls/hallsActions'
 import Loader from './Loader';
 // this is just styled input fields
 import { FormikTextField } from 'formik-material-fields';
@@ -31,12 +32,17 @@ const DropDownElementStyle = {
 function ScreeningForm(props) {
     const { screening, closeModalFn } = props;
     const { loading, films,error } = useSelector(state => state.filmsState);
+    const { halls } = useSelector(state => state.hallsState);
     const dispatch = useDispatch();
 
     
     useEffect(() => {
         dispatch(getFilms());
     }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(getHalls());
+    },[dispatch]);
 
     if(loading) return <Loader />;
 
@@ -47,11 +53,13 @@ function ScreeningForm(props) {
        filmId:screening.filmId,
        hallId:screening.hallId
     };
-
+    
     const validationSchema = Yup.object({
         filmName: Yup.string().required('Required'),
-        time: Yup.number().positive('Time cannot be a negative number').required('Required'),
-        hallId: Yup.number().required('Required'),
+        time: Yup.date().min(new Date())
+                                    .max(new Date('01-01-2050'))
+                                    .required('Required'),
+        hallId: Yup.string().required('Required'),
     });
 
     const handleSubmit = values => {
@@ -86,7 +94,7 @@ function ScreeningForm(props) {
                         films.map(film => {
                             return (
                                 <option key={film.id} value={film.id} style={DropDownElementStyle}>
-                                    {film.title}
+                                    {film.id} {film.title}
                                 </option>
                             )
                         })
@@ -94,25 +102,33 @@ function ScreeningForm(props) {
 
                     </Field>
                     <FormikTextField
-                        type="number"
+                        type="date"
                         id="time"
                         name="time"
-                        label="Godzina Startu"
                         margin="normal"
                     />
-                    <FormikTextField
-                        type="text"
-                        id="hallId"
-                        name="hallId"
-                        label="Numer Sali"
-                        margin="normal"
-                    />
+
+                    <Field
+                    component="select"
+                    id="hallId"
+                    name="hallId"
+                    style={DropDownStyle}>
+                        {
+                            halls.map(hall => {
+                                return (
+                                    <option key={hall.id} value={hall.id} style={DropDownElementStyle}>
+                                        Sala numer {hall.id}
+                                    </option>
+                                )
+                            })
+                        }
+                    </Field>
                     <Button
                         style={{ marginTop: '32px' }}
                         type="submit"
                         variant="contained"
                         color="primary"
-                        disabled={!formik.isValid}
+                        //disabled={!formik.isValid}
                     >
                         Zapisz
                     </Button>
@@ -126,18 +142,18 @@ ScreeningForm.propTypes = {
     closeModalFn: PropTypes.func.isRequired,
     screening: PropTypes.shape({
         // maybe here we can add custom props function to check for minimal length or smth like this
-        filmId: PropTypes.number.isRequired,
+        filmId: PropTypes.string.isRequired,
         startTime: PropTypes.instanceOf(new Date()),
-        hallId: PropTypes.number
+        hallId: PropTypes.string
     }),
 };
 
 // when we are adding a new movie we don't have to pass any props
 ScreeningForm.defaultProps = {
     screening: {
-        startTime: 0,
-        hallId: 1,
-        filmId: 1,
+        startTime: new Date(),
+        hallId: '1',
+        filmId: '1',
     },
 };
 
