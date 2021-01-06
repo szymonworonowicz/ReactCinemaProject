@@ -1,10 +1,17 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
-import { Container, Typography,Dialog, DialogTitle,DialogContent} from '@material-ui/core';
+import { Container, Typography,Dialog, DialogTitle,DialogContent,Fab} from '@material-ui/core';
+import { Add } from '@material-ui/icons';
 import ScreeningForm from '../components/ScreeningForm';
 import ScreeningList from '../components/ScreeningList'
 
 const isObjectEmpty = obj => Object.keys(obj).length === 0;
+
+const FabStyle = {
+	position: 'fixed',
+	bottom: '32px',
+	right: '32px',
+}
 class SeancesView extends React.Component {
 	state = {
 		openModal: false,
@@ -65,6 +72,14 @@ class SeancesView extends React.Component {
 				}}>Najnowsze seanse</Typography>
 				{/* seances search bar */}
 				<ScreeningList changeFormValuesFn={this.changeFormInitValues}/>
+				<Fab
+						onClick={this.openModal}
+						style={FabStyle} 
+						color="primary"
+						aria-label="add"
+					>
+						<Add/>
+					</Fab>
 			</Container>
 		</>
 	);}
