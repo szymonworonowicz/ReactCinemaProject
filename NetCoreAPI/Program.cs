@@ -17,7 +17,7 @@ namespace NetCoreAPI
 {
     public class Program
     {
-        public static  void Main(string[] args)
+        public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
 
@@ -28,9 +28,9 @@ namespace NetCoreAPI
 
         private static async Task CreateDb(IHost host)
         {
-            using(var scope = host.Services.CreateScope()) 
+            using (var scope = host.Services.CreateScope())
             {
-                var services  = scope.ServiceProvider;
+                var services = scope.ServiceProvider;
 
                 try
                 {
@@ -38,13 +38,13 @@ namespace NetCoreAPI
 
                     context.Database.EnsureCreated();
 
-                    if(await context.Halls.AnyAsync() == false ) 
+                    if (await context.Halls.AnyAsync() == false)
                     {
                         List<Hall> halls = new List<Hall>();
                         Random rand = new Random();
-                        for(int i=0;i<10;i++) 
+                        for (int i = 0; i < 10; i++)
                         {
-                            halls.Add(new Hall{Capacity = rand.Next(50,90)});
+                            halls.Add(new Hall { Capacity = rand.Next(50, 90) });
                         }
 
                         await context.Halls.AddRangeAsync(halls);
@@ -52,17 +52,27 @@ namespace NetCoreAPI
 
                         List<Film> films = new List<Film>();
 
-                        string json="";
-                        using(StreamReader str = new StreamReader("Films.json")) 
+                        string json = "";
+                        using (StreamReader str = new StreamReader("Films.json"))
                         {
-                            json =  str.ReadToEnd();
+                            json = str.ReadToEnd();
                         }
 
                         films = JsonSerializer.Deserialize<List<Film>>(json);
 
                         await context.Films.AddRangeAsync(films);
                         await context.SaveChangesAsync();
-                        
+
+                        List<Screening> screenings = new List<Screening>();
+                        // generowanie seansow
+                        for (int i = 0; i < 10; i++)
+                        {
+                            screenings.Add( new Screening { FilmId = rand.Next(0, 20), HallId = rand.Next(0, 10), StartTime = DateTime.Now.AddDays(rand.Next(0,20)).AddHours(rand.Next(0,20))});
+                        }
+
+                        await context.Screenings.AddRangeAsync(screenings);
+                        await context.SaveChangesAsync();
+
                     }
                 }
                 catch (InvalidOperationException e)
