@@ -18,7 +18,7 @@ namespace NetCoreAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> getFilms()
         {
-            var films = await Context.Films.Include(x => x.Screenings).ToListAsync();
+            var films = await Context.Films.ToListAsync();
 
             if (films != null)
             {
@@ -33,7 +33,7 @@ namespace NetCoreAPI.Controllers
         {
             if (id !=0)
             {
-                var films = await Context.Films.Include(x => x.Screenings).FirstOrDefaultAsync(x => x.Id == id);
+                var films = await Context.Films.FirstOrDefaultAsync(x => x.Id == id);
 
                 if (films != null)
                 {

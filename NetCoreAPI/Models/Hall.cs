@@ -6,6 +6,5 @@ namespace NetCoreAPI.Models
     {
         public int Id { get; set; } 
         public int Capacity { get; set; }
-        public virtual ICollection<Screening> Screenings{get;set;}
     }
 }

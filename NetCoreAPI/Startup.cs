@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NetCoreAPI.DAL;
+using Newtonsoft.Json;
 
 namespace NetCoreAPI
 {
@@ -29,6 +30,7 @@ namespace NetCoreAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            
 
             services.AddDbContext<DataContext>(options =>
             {

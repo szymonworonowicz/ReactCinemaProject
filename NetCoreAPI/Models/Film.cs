@@ -9,6 +9,6 @@ namespace NetCoreAPI.Models
         public double Time { get; set; }
         public string Director { get; set; }
         public string Description { get; set; }
-        public virtual ICollection<Screening> Screenings{ get; set; }
+        //public virtual ICollection<Screening> Screenings{ get; set; }
     }
 }

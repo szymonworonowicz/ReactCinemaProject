@@ -20,7 +20,7 @@ namespace NetCoreAPI.Controllers
         {
             if (await Context.Screenings.AnyAsync())
             {
-                var screenings = Context.Screenings.Include(x => x.Film)
+                var screenings = await Context.Screenings.Include(x => x.Film)
                                                     .Include(x => x.Hall)
                                                     .Include(x => x.Tickets)
                                                     .ToListAsync();
@@ -32,18 +32,18 @@ namespace NetCoreAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> getScreenings([FromRoute] int id)
+        public async Task<IActionResult> getScreening([FromRoute] int id)
         {
             if (await Context.Screenings.AnyAsync())
             {
                 if (id !=0)
                 {
-                    var screenings = Context.Screenings.Include(x => x.Film)
+                    var screening = await Context.Screenings.Include(x => x.Film)
                                                         .Include(x => x.Hall)
                                                         .Include(x => x.Tickets)
                                                         .FirstOrDefaultAsync(x => x.Id == id);
 
-                    return Ok(new { screenings = screenings });
+                    return Ok(new { screening = screening });
 
                 }
             }

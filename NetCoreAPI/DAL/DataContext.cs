@@ -26,15 +26,15 @@ namespace NetCoreAPI.DAL
 
             modelBuilder.Entity<Screening>(entity => {
 
-                entity.HasOne(x => x.Film)
-                .WithMany(x => x.Screenings)
-                .HasForeignKey(x => x.FilmId)
-                .OnDelete(DeleteBehavior.NoAction);
+                // entity.HasOne(x => x.Film)
+                // .WithMany(x => x.Screenings)
+                // .HasForeignKey(x => x.FilmId)
+                // .OnDelete(DeleteBehavior.NoAction);
 
-                entity.HasOne(x =>x.Hall)
-                .WithMany(x => x.Screenings)
-                .HasForeignKey(x => x.HallId)
-                .OnDelete(DeleteBehavior.NoAction);
+                // entity.HasOne(x =>x.Hall)
+                // .WithMany(x => x.Screenings)
+                // .HasForeignKey(x => x.HallId)
+                // .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasMany(x => x.Tickets)
                 .WithOne(x => x.Screening)
