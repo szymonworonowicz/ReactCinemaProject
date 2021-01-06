@@ -24,69 +24,69 @@ namespace NetCoreAPI.Controllers
                                                     .Include(x => x.Hall)
                                                     .Include(x => x.Tickets)
                                                     .ToListAsync();
-
-                return Ok(new { screenings = screenings });
-            }
+                screenings.Sort((x, y) => x.StartTime.CompareTo(y.StartTime));
+            return Ok(new { screenings = screenings });
+        }
 
             return BadRequest("Nie ma zadnego seansu w bazie");
-        }
+    }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> getScreening([FromRoute] int id)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> getScreening([FromRoute] int id)
+    {
+        if (await Context.Screenings.AnyAsync())
         {
-            if (await Context.Screenings.AnyAsync())
+            if (id != 0)
             {
-                if (id !=0)
-                {
-                    var screening = await Context.Screenings.Include(x => x.Film)
-                                                        .Include(x => x.Hall)
-                                                        .Include(x => x.Tickets)
-                                                        .FirstOrDefaultAsync(x => x.Id == id);
+                var screening = await Context.Screenings.Include(x => x.Film)
+                                                    .Include(x => x.Hall)
+                                                    .Include(x => x.Tickets)
+                                                    .FirstOrDefaultAsync(x => x.Id == id);
 
-                    return Ok(new { screening = screening });
+                return Ok(new { screening = screening });
 
-                }
             }
-
-            return BadRequest("Nie ma seansu o takim id w bazie");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> addScreening([FromBody]Screening screening)
+        return BadRequest("Nie ma seansu o takim id w bazie");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> addScreening([FromBody] Screening screening)
+    {
+        if (await Context.Screenings.AnyAsync(x => x.StartTime == screening.StartTime) == false)
         {
-            if (await Context.Screenings.AnyAsync(x => x.StartTime == screening.StartTime) == false)
+            await Context.Screenings.AddAsync(screening);
+
+            await Context.SaveChangesAsync();
+
+            return StatusCode(201, new { screening = screening });
+        }
+
+        return BadRequest("Seans istnieje w bazie");
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> updateScreening([FromBody] Screening screening)
+    {
+        if (await Context.Screenings.AnyAsync(x => x.Id == screening.Id))
+        {
+            try
             {
-                await Context.Screenings.AddAsync(screening);
+                Context.Screenings.Update(screening);
 
                 await Context.SaveChangesAsync();
 
-                return StatusCode(201,new {screening = screening});
+                return Ok();
             }
-
-            return BadRequest("Seans istnieje w bazie");
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> updateScreening([FromBody]Screening screening)
-        {
-            if(await Context.Screenings.AnyAsync( x => x.Id == screening.Id)) 
+            catch (System.Exception)
             {
-                try
-                {
-                    Context.Screenings.Update(screening);
 
-                    await Context.SaveChangesAsync();
-
-                    return Ok();
-                }
-                catch (System.Exception)
-                {
-                    
-                    throw;
-                }
+                throw;
             }
-
-            return BadRequest("Dany seans nie istnieje w bazie");
         }
+
+        return BadRequest("Dany seans nie istnieje w bazie");
     }
+}
 }
