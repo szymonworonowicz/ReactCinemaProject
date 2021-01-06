@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { Formik, Form } from 'formik';
+import {useSelector, useDispatch } from 'react-redux';
+import { Formik, Form, Field } from 'formik';
+import { getFilms } from '../redux/film/filmActions';
+import Loader from './Loader';
 // this is just styled input fields
 import { FormikTextField } from 'formik-material-fields';
 import { Button } from '@material-ui/core'
@@ -16,14 +18,33 @@ const FormStyle = {
     display: 'flex',
     flexDirection: 'column',
 };
+const DropDownStyle = {
+    height:'30px',
+    background: 'white'
+
+};
+const DropDownElementStyle = {
+    fontsize:'25px',
+}
+
 
 function ScreeningForm(props) {
     const { screening, closeModalFn } = props;
+    const { loading, films,error } = useSelector(state => state.filmsState);
     const dispatch = useDispatch();
+
+    
+    useEffect(() => {
+        dispatch(getFilms());
+    }, [dispatch]);
+
+    if(loading) return <Loader />;
+
+    if(error) return <p>Error: {error}</p>
 
     const initialValues = {
        time:screening.startTime,
-       filmName:screening.film.title,
+       filmId:screening.filmId,
        hallId:screening.hallId
     };
 
@@ -56,12 +77,22 @@ function ScreeningForm(props) {
         >
             {formik => (
                 <Form style={FormStyle}>
-                    <FormikTextField
-                        type="text"
-                        id="filmName"
-                        name="filmName"
-                        label="Tytuł filmu"
-                    />
+                    <Field
+                        component="select"
+                        id="filmId"
+                        name="filmId"
+                        style={DropDownStyle}>
+                    {
+                        films.map(film => {
+                            return (
+                                <option key={film.id} value={film.id} style={DropDownElementStyle}>
+                                    {film.title}
+                                </option>
+                            )
+                        })
+                    }
+
+                    </Field>
                     <FormikTextField
                         type="number"
                         id="time"
@@ -93,21 +124,20 @@ function ScreeningForm(props) {
 
 ScreeningForm.propTypes = {
     closeModalFn: PropTypes.func.isRequired,
-    film: PropTypes.shape({
+    screening: PropTypes.shape({
         // maybe here we can add custom props function to check for minimal length or smth like this
-        id: PropTypes.number,
-        filmName: PropTypes.string,
-        time: PropTypes.number,
+        filmId: PropTypes.number.isRequired,
+        startTime: PropTypes.instanceOf(new Date()),
         hallId: PropTypes.number
     }),
 };
 
 // when we are adding a new movie we don't have to pass any props
 ScreeningForm.defaultProps = {
-    film: {
-        filmName: '',
-        time: 0,
+    screening: {
+        startTime: 0,
         hallId: 1,
+        filmId: 1,
     },
 };
 
