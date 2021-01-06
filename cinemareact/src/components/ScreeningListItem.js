@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardHeader, CardContent, Typography, IconButton, Button, Popover } from '@material-ui/core';
-import { MoreVert, Edit, } from '@material-ui/icons';
+import { MoreVert, Edit, ShopRounded } from '@material-ui/icons';
 
 const CardStyle = {
     flexBasis: '45%',
@@ -27,8 +27,18 @@ class ScreeningListItem extends React.Component {
         });
     }
 
+    buyTicket = () => {
+        
+    }
     editScreening = () => {
         this.props.changeFormValuesFn(this.props.screening);
+    }
+
+    getStringFromDate = (date) => {
+        let dateFromString = new Date(date);
+        return ("00" + (dateFromString.getUTCDate())).slice(-2) + "."+ ("00" + (dateFromString.getMonth()+1)).slice(-2) + "."+dateFromString.getFullYear()+ "  " 
+            + dateFromString.getHours()+":" + dateFromString.getMinutes();
+        
     }
     
     render() {
@@ -52,7 +62,7 @@ class ScreeningListItem extends React.Component {
                     }}
                 />
                 <CardContent style={{ marginTop: '0' }}>
-                    <Typography variant="body1" style={{ marginBottom: '16px' }}>Czas rozpoczęcia: {screening.startTime} minut</Typography>
+                    <Typography variant="body1" style={{ marginBottom: '16px' }}>Czas rozpoczęcia: {this.getStringFromDate(screening.startTime)}</Typography>
                     <Typography variant="body1" style={{ marginBottom: '16px' }}>Nr sali: {screening.hallId}</Typography>
                     <Popover
                         open={this.state.anchorEl !== null}
@@ -74,6 +84,13 @@ class ScreeningListItem extends React.Component {
                             >
                                 <Edit/>
                                 <span style={{ marginLeft: '8px' }}>Edytuj</span>
+                            </Button>
+                            <Button 
+                                style={{ display: 'flex', justifyContent: 'flex-start' }}
+                                onClick={this.buyTicket}
+                            >
+                                <ShopRounded/>
+                                <span style={{ marginLeft: '8px' }}>Kup bilet</span>
                             </Button>
                         </div>
                     </Popover>
