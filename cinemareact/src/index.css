@@ -11,6 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/*these are seeting style*/
+.seeting-style {
+  padding: 5px;
+	text-align: 'center';
+	color: 'greem',
+}
 
 /* these are loader styles */
 .lds-roller {
