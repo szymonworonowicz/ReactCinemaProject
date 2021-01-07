@@ -6,8 +6,11 @@ import { getFilms } from "../redux/film/filmActions";
 import { getHalls } from "../redux/halls/hallsActions";
 import Loader from "./Loader";
 // this is just styled input fields
-import { FormikTextField } from "formik-material-fields";
-import { Button } from "@material-ui/core";
+import { TextField } from 'formik-material-ui';
+import { DateTimePicker } from "formik-material-ui-pickers";
+import { Button, MenuItem } from "@material-ui/core";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 import * as Yup from "yup";
 import {
   addScreening,
@@ -21,13 +24,6 @@ const FormStyle = {
   background: "white",
   display: "flex",
   flexDirection: "column",
-};
-const DropDownStyle = {
-  height: "30px",
-  background: "white",
-};
-const DropDownElementStyle = {
-  fontsize: "25px",
 };
 
 function ScreeningForm(props) {
@@ -87,46 +83,47 @@ function ScreeningForm(props) {
       {(formik) => (
         <Form style={FormStyle}>
           <Field
-            component="select"
+            component={TextField}
+            select
             id="filmId"
             name="filmId"
-            style={DropDownStyle}
-            label="Select film"
+            label="Film"
           >
             {films.map((film) => {
               return (
-                <option
+                <MenuItem
                   key={film.id}
                   value={film.id}
-                  style={DropDownElementStyle}
                 >
                   {film.id} {film.title}
-                </option>
+                </MenuItem>
               );
             })}
           </Field>
-          <FormikTextField
-            type="datetime-local"
-            id="time"
-            name="time"
-            margin="normal"
-          />
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Field
+              component={DateTimePicker}
+              id="time"
+              name="time"
+              margin="normal"
+              label="Data"
+            />
+          </MuiPickersUtilsProvider>
           <Field
-            component="select"
+            component={TextField}
+            select
             id="hallId"
             name="hallId"
-            style={DropDownStyle}
-            label="Select Hall"
+            label="Sala"
           >
             {halls.map((hall) => {
               return (
-                <option
+                <MenuItem
                   key={hall.id}
                   value={hall.id}
-                  style={DropDownElementStyle}
                 >
                   Sala numer {hall.id}
-                </option>
+                </MenuItem>
               );
             })}
           </Field>
