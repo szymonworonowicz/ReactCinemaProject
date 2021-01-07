@@ -67,8 +67,8 @@ namespace NetCoreAPI
                         // generowanie seansow
                         for (int i = 0; i < 10; i++)
                         {
-                            var StartTime = new DateTime(2021,rand.Next(1,12),rand.Next(1,28),rand.Next(8,22),rand.Next(1,6)*10,0);
-                            screenings.Add( new Screening { FilmId = rand.Next(0, 20), HallId = rand.Next(0, 10), StartTime = StartTime});
+                            var StartTime = new DateTime(2021,rand.Next(1,12),rand.Next(1,28),rand.Next(8,22),rand.Next(1,5)*10,0);
+                            screenings.Add( new Screening { FilmId = rand.Next(1, 19), HallId = rand.Next(1, 9), StartTime = StartTime});
                         }
 
                         context.Screenings.AddRange(screenings);

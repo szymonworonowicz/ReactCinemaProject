@@ -28,12 +28,10 @@ class ScreeningListItem extends React.Component {
         });
     }
 
-    buyTicket = (id) => {
-    }
     editScreening = () => {
         this.props.changeFormValuesFn(this.props.screening);
     }
-
+    
     getStringFromDate = (date) => {
         let dateFromString = new Date(date);
         return ("00" + (dateFromString.getUTCDate())).slice(-2) + "."+ ("00" + (dateFromString.getMonth()+1)).slice(-2) + "."+dateFromString.getFullYear()+ "  " 
