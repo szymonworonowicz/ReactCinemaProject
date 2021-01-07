@@ -66,8 +66,11 @@ function ScreeningForm(props) {
       const updatedScreening = {
         ...screening,
         ...values,
+        film: films.find(f => f.id === values.filmId),
+        startTime: values.time.toString(),
       };
 
+      // console.log({ updatedScreening });
       dispatch(updateScreening(updatedScreening));
     }
 
