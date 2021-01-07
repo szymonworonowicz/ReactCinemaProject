@@ -146,18 +146,18 @@ ScreeningForm.propTypes = {
   closeModalFn: PropTypes.func.isRequired,
   screening: PropTypes.shape({
     // maybe here we can add custom props function to check for minimal length or smth like this
-    filmId: PropTypes.string.isRequired,
-    startTime: PropTypes.instanceOf(new Date()),
-    hallId: PropTypes.string,
+    filmId: PropTypes.number,
+    startTime: PropTypes.string,
+    hallId: PropTypes.number,
   }),
 };
 
 // when we are adding a new movie we don't have to pass any props
 ScreeningForm.defaultProps = {
   screening: {
-    startTime: new Date(),
-    hallId: "0",
-    filmId: "0",
+    startTime: new Date().toString(),
+    hallId: 0,
+    filmId: 0,
   },
 };
 
