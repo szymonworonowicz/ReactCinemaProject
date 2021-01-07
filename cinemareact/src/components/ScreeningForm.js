@@ -58,7 +58,7 @@ function ScreeningForm(props) {
     filmId: Yup.string().required("Required"),
     time: Yup.date()
       .min(new Date())
-      .max(new Date("01-01-2050"))
+      .max(new Date("2050-01-01T00:00:00"))
       .required("Required"),
     hallId: Yup.string().required("Required"),
   });
