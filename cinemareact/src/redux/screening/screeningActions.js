@@ -45,6 +45,21 @@ export const getScreenings = () => {
             });
     }
 }
+export const getScreening = id => {
+    return function(dispatch) {
+        dispatch(getScreeningsRequest());
+
+        instance.get(`http://localhost:5000/screening/${id}`)
+            .then(resp => {
+                const { screenings } = resp.data; // shorthand for const data = resp.data;
+                dispatch(getScreeningsSuccess(screenings));
+            })
+            .catch(err => {
+                const { message } = err;
+                dispatch(getScreeningsFailure(message));
+            });
+    }
+}
 
 const addScreeningRequest = () => ({
     type: screeningActions.ADD_SCREENING_REQUEST,
