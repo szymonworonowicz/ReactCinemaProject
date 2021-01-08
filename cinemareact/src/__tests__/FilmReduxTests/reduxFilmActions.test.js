@@ -1,5 +1,5 @@
-import * as actions from '../redux/film/filmActions'
-import * as types from '../redux/film/filmTypes'
+import * as actions from '../../redux/film/filmActions'
+import * as types from '../../redux/film/filmTypes'
 
 describe('filmactions', () => {
 

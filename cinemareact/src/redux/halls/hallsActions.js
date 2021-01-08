@@ -34,7 +34,7 @@ export const getHalls = () => {
     return function(dispatch) {
         dispatch(getHallsRequest());
 
-        instance.get('http://localhost:5000/hall')
+        return instance.get('http://localhost:5000/hall')
             .then(resp => {
                 console.log(resp);
                 const { halls } = resp.data; // shorthand for const data = resp.data;

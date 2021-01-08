@@ -1,5 +1,5 @@
-import * as actions from "../redux/film/filmActions";
-import * as types from "../redux/film/filmTypes";
+import * as actions from "../../redux/film/filmActions";
+import * as types from "../../redux/film/filmTypes";
 import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
 import mockAxios from "axios";

@@ -34,7 +34,7 @@ export const getScreenings = () => {
     return function(dispatch) {
         dispatch(getScreeningsRequest());
 
-        instance.get('http://localhost:5000/screening')
+        return instance.get('http://localhost:5000/screening')
             .then(resp => {
                 const { screenings } = resp.data; // shorthand for const data = resp.data;
                 dispatch(getScreeningsSuccess(screenings));
@@ -49,7 +49,7 @@ export const getScreening = id => {
     return function(dispatch) {
         dispatch(getScreeningsRequest());
 
-        instance.get(`http://localhost:5000/screening/${id}`)
+        return instance.get(`http://localhost:5000/screening/${id}`)
             .then(resp => {
                 const { screenings } = resp.data; // shorthand for const data = resp.data;
                 dispatch(getScreeningsSuccess(screenings));
@@ -82,7 +82,7 @@ export const addScreening = screening => {
         dispatch(addScreeningRequest());
         // using env variables solves this issuse
         // https://stackoverflow.com/questions/53812984/react-axios-appends-window-origin-to-provided-url-json-server
-        instance.post(`${process.env.REACT_APP_SERVER_BASE_URL}/screening`, {
+        return instance.post(`${process.env.REACT_APP_SERVER_BASE_URL}/screening`, {
             StartTime: time,
             FilmId: parseInt(filmId),
             HallId: parseInt(hallId),
@@ -124,7 +124,7 @@ export const updateScreening = updatedScreening => {
           startTime: updatedScreening.time,
         };
 
-        instance.put('http://localhost:5000/screening', {
+        return instance.put('http://localhost:5000/screening', {
             ...apiData
         })
         .then(() => {

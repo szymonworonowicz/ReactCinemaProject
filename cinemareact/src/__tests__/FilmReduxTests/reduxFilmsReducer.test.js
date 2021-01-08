@@ -1,5 +1,5 @@
-import * as reducer from "../redux/film/filmReducer"
-import * as types from "../redux/film/filmTypes"
+import * as reducer from "../../redux/film/filmReducer"
+import * as types from "../../redux/film/filmTypes"
 
 describe('test reducer',() => {
     it('should return the initial state',() => {

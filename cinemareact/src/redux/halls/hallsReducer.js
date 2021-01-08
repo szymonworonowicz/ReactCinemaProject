@@ -6,7 +6,7 @@ const initialState = {
     error: '',
 };
 
-const hallsReducer = (state = initialState, action) => {
+export const hallsReducer = (state = initialState, action) => {
     switch(action.type) {
         case hallsAction.GET_HALLS_REQUEST:
             return {
