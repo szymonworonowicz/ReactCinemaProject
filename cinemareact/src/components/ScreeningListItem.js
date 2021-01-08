@@ -1,4 +1,5 @@
 import React from 'react';
+import {  Link  } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Card, CardHeader, CardContent, Typography, IconButton, Button, Popover } from '@material-ui/core';
 import { MoreVert, Edit, ShopRounded } from '@material-ui/icons';
@@ -27,13 +28,10 @@ class ScreeningListItem extends React.Component {
         });
     }
 
-    buyTicket = () => {
-        
-    }
     editScreening = () => {
         this.props.changeFormValuesFn(this.props.screening);
     }
-
+    
     getStringFromDate = (date) => {
         let dateFromString = new Date(date);
         return ("00" + (dateFromString.getUTCDate())).slice(-2) + "."+ ("00" + (dateFromString.getMonth()+1)).slice(-2) + "."+dateFromString.getFullYear()+ "  " 
@@ -87,10 +85,9 @@ class ScreeningListItem extends React.Component {
                             </Button>
                             <Button 
                                 style={{ display: 'flex', justifyContent: 'flex-start' }}
-                                onClick={this.buyTicket}
                             >
                                 <ShopRounded/>
-                                <span style={{ marginLeft: '8px' }}>Kup bilet</span>
+                                <Link to={{ pathname:"/seance/"+screening.id,  params:{id: screening.id}}} style={{ marginLeft: '8px', textDecoration: 'none',color: 'black'}} > Kup bilet </Link>
                             </Button>
                         </div>
                     </Popover>
