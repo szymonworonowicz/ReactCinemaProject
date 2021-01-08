@@ -32,16 +32,18 @@ export const getFilmsFailure = error => ({
 // our async action
 export const getFilms = () => {
     return function(dispatch) {
-        dispatch(getFilmsRequest());
+        //dispatch(getFilmsRequest());
 
-        instance.get('http://localhost:5000/film')
+        return instance.get('http://localhost:5000/film')
             .then(resp => {
                 const { films } = resp.data; // shorthand for const data = resp.data;
                 dispatch(getFilmsSuccess(films));
+                return films;
             })
             .catch(err => {
                 const { message } = err;
                 dispatch(getFilmsFailure(message));
+                return err;
             });
     }
 }
