@@ -1,4 +1,4 @@
-import React , { useEffect } from 'react';
+import React , { useEffect,useState } from 'react';
 import Navigation from '../components/Navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { getScreenings} from '../redux/screening/screeningActions';
@@ -21,8 +21,6 @@ const paperStyle = {
 		borderTopRightRadius:20,
 		width:'40px',
 		height:'40px',
-		borderStyle: 'solid',
-		borderWidth: 'medium'
 	}
 const rowStyle = {
 	fontSize :'18px',
@@ -35,18 +33,27 @@ const rowStyle = {
 
 const SeatingValid = {
 	borderColor: 'Green',
+	borderStyle: 'solid',
+	borderWidth: 'medium'
 }
 const SeatingInValid = {
 	borderColor: 'Red',
+	borderStyle: 'solid',
+	borderWidth: 'medium'
 
 }
 const SelectItem =  {
-	borderColor: 'Yellow',
+	borderColor: 'Navy',
+	borderStyle: 'ridge',
+	borderWidth: 'thick'
 }
+
+
 
 function SeanceDetailsView(props) {
 	const id = props.match.params.id;
 	
+	const [tickets,setTickets] = useState({ });
 
 	const { loading, screenings, error } = useSelector(state => state.screeningState);
 	const dispatch = useDispatch();
@@ -76,31 +83,40 @@ function SeanceDetailsView(props) {
 	// eslint-disable-next-line eqeqeq
 	const screening = screenings.filter(x => x.id == id)[0];
 
-	const isSeatingValid =(id) => {
+
+	const isSeatingValid =(SeetingId) => {
 		// eslint-disable-next-line eqeqeq
-		var elem = screening.tickets.find(x => x.id == id);
+		var elem = screening.tickets.find(x => x.Seeting == SeetingId);
 		// eslint-disable-next-line eqeqeq
 		if(elem == undefined) {
 			return true;
 		} return false;
 	}
-	let tickets = []
 	const onSeetingClick = (event,valid) => {
 		console.log(event)
 		if(valid) {
 			const Seeting =  event.target.attributes['data-key'].value;
 			const styles = event.target.attributes['style'].value; 
-			if(styles.indexOf('border-color: green;')!==-1) {
-				event.target.styles = {...paperStyle,...SelectItem}
-				tickets.push(
-					{
-						Seeting:Seeting,
-						ScreeningID:id
-					}
-				)
+			const isstyled = styles.indexOf('border-color: green;');
+			if(isstyled !==-1) {
+				event.target.styles = {...paperStyle,...SelectItem};
+				// let ticketslocal['Seeting'] = {
+				// 	Seeting:Seeting;
+				// 	ScreeningID:id
+				// }
+				let ticketlocal = { }
+				ticketlocal[`${Seeting}`] = {
+					Seeting:Seeting,
+					ScreeningID:id
+				}
+				setTickets({...tickets,...ticketlocal})
+				//setTickets([...tickets,...localtickets])
+				
 			} else {
 				event.target.styles = {...paperStyle,...SeatingValid}
-				tickets = tickets.filter(x => x.Seeting!==Seeting)
+				//let ticketslocal = tickets.filter(x => x.Seeting!=Seeting)
+				delete tickets[`${Seeting}`]
+				setTickets(tickets)
 			}
 			
 			
@@ -122,7 +138,10 @@ function SeanceDetailsView(props) {
 			}
 			else {
 				let style = {};
-				if(isSeatingValid(i*10+j)) {
+				if(tickets.hasOwnProperty(`${i*10+j}`)) {
+					style = {...paperStyle,...SelectItem}
+				}
+				else if(isSeatingValid(i*10+j)) {
 					style = {...paperStyle,...SeatingValid}
 				} else {
 					style = {...paperStyle,...SeatingInValid}
@@ -138,6 +157,7 @@ function SeanceDetailsView(props) {
 		seetingslist.push(row);
 	}
 	return (
+		
 		<div style={{position: 'relative'}}>
 			<Navigation />
 			<Container maxWidth="lg">
