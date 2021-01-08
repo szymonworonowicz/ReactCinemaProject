@@ -15,16 +15,16 @@ const instance = axios.create({
 
 // these are not necessary, but async action will look cleaner thanks to them
 // parenthesis are necessary when you want to return an object like this (without explicitly writing return)
-const getFilmsRequest = () => ({
+export const getFilmsRequest = () => ({
     type: filmActions.GET_FILMS_REQUEST,
 });
 
-const getFilmsSuccess = films => ({
+export const getFilmsSuccess = films => ({
     type: filmActions.GET_FILMS_SUCCES,
     payload: films,
 });
 
-const getFilmsFailure = error => ({
+export const getFilmsFailure = error => ({
     type: filmActions.GET_FILMS_FAILURE,
     payload: error,
 });
@@ -46,16 +46,16 @@ export const getFilms = () => {
     }
 }
 
-const addFilmRequest = () => ({
+export const addFilmRequest = () => ({
     type: filmActions.ADD_FILM_REQUEST,
 });
 
-const addFilmSuccess = film => ({
+export const addFilmSuccess = film => ({
     type: filmActions.ADD_FILM_SUCCESS,
     payload: film,
 });
 
-const addFilmFailure = error => ({
+export const addFilmFailure = error => ({
     type: filmActions.ADD_FILM_FAILURE,
     payload: error,
 });
@@ -85,16 +85,16 @@ export const addFilm = film => {
     }
 }
 
-const deleteFilmRequest = () => ({
+export const deleteFilmRequest = () => ({
     type: filmActions.DELETE_FILM_REQUEST,
 });
 
-const deleteFilmSuccess = id => ({
+export const deleteFilmSuccess = id => ({
     type: filmActions.DELETE_FILM_SUCCESS,
     payload: id,
 });
 
-const deleteFilmFailure = error => ({
+export const deleteFilmFailure = error => ({
     type: filmActions.DELETE_FILM_FAILURE,
     payload: error,
 });
@@ -114,16 +114,16 @@ export const deleteFilm = id => {
     }
 }
 
-const updateFilmRequest = () => ({
+export const updateFilmRequest = () => ({
     type: filmActions.UPDATE_FILM_REQUEST,
 });
 
-const updateFilmSuccess = updatedFilm => ({
+export const updateFilmSuccess = updatedFilm => ({
     type: filmActions.UPDATE_FILM_SUCCESS,
     payload: updatedFilm,
 });
 
-const updateFilmFailure = error => ({
+export const updateFilmFailure = error => ({
     type: filmActions.UPDATE_FILM_FAILURE,
     payload: error,
 });
