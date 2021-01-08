@@ -1,5 +1,5 @@
-import * as actions from '../redux/screening/screeningActions'
-import * as types from '../redux/screening/screeningTypes'
+import * as actions from '../../redux/screening/screeningActions'
+import * as types from '../../redux/screening/screeningTypes'
 
 describe('filmactions', () => {
 

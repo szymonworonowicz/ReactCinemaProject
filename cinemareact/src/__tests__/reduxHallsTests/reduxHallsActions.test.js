@@ -1,5 +1,5 @@
-import * as actions from '../redux/halls/hallsActions'
-import * as  types from '../redux/halls/hallsTypes'
+import * as actions from '../../redux/halls/hallsActions'
+import * as  types from '../../redux/halls/hallsTypes'
 
 describe('hallsAction', () => {
 
