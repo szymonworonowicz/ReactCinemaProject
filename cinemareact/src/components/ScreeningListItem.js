@@ -104,7 +104,7 @@ ScreeningListItem.propTypes = {
     screening: PropTypes.shape({
         // maybe here we can add custom props function to check for minimal length or smth like this
         id: PropTypes.number.isRequired,
-        startTime: PropTypes.instanceOf(new Date()).isRequired,
+        startTime: PropTypes.string.isRequired,
         filmId: PropTypes.number.isRequired,
         hallId: PropTypes.number.isRequired,
         film: PropTypes.object.isRequired,

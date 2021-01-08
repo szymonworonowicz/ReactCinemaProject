@@ -117,8 +117,15 @@ export const updateScreening = updatedScreening => {
     return function(dispatch) {
         dispatch(updateScreeningRequest());
 
-        instance.put('http://localhost:5000/film', {
-            ...updatedScreening
+        const apiData = {
+          id: updatedScreening.id,
+          filmId: updatedScreening.filmId,
+          hallId: updatedScreening.hallId,
+          startTime: updatedScreening.time,
+        };
+
+        instance.put('http://localhost:5000/screening', {
+            ...apiData
         })
         .then(() => {
             dispatch(updateScreeningSuccess(updatedScreening));

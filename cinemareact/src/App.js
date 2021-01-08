@@ -4,7 +4,7 @@ import store from './redux/store';
 import SeancesView from './views/SeancesView';
 import MoviesView from './views/MoviesView';
 import RoomsView from './views/RoomsView';
-import SeanceDetailsView from './views/SeanceDetailsView';
+import SeanceDetailsView from './views/NewSeanceDetailsView';
 
 function App() {
   return (
