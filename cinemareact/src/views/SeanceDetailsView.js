@@ -14,9 +14,15 @@ const CardStyle = {
 };
 const paperStyle = {
 		padding:'5px',
-		margin:'5px',
+		margin:'2px 5x 2px 5x',
 		textAlign: 'center',
-		backgroundcolor:'Red'
+		backgroundcolor:"#FF0000",
+		borderTopLeftRadius:20,
+		borderTopRightRadius:20,
+		width:'40px',
+		height:'40px',
+		borderStyle: 'solid',
+		borderWidth: 'medium'
 	}
 const rowStyle = {
 	fontSize :'18px',
@@ -28,10 +34,14 @@ const rowStyle = {
 
 
 const SeatingValid = {
-	color:'green'
+	borderColor: 'Green',
 }
 const SeatingInValid = {
-	color :'red'
+	borderColor: 'Red',
+
+}
+const SelectItem =  {
+	borderColor: 'Yellow',
 }
 
 function SeanceDetailsView(props) {
@@ -71,8 +81,31 @@ function SeanceDetailsView(props) {
 		var elem = screening.tickets.find(x => x.id == id);
 		// eslint-disable-next-line eqeqeq
 		if(elem == undefined) {
-			return false;
-		} return true;
+			return true;
+		} return false;
+	}
+	let tickets = []
+	const onSeetingClick = (event,valid) => {
+		console.log(event)
+		if(valid) {
+			const Seeting =  event.target.attributes['data-key'].value;
+			const styles = event.target.attributes['style'].value; 
+			if(styles.indexOf('border-color: green;')!==-1) {
+				event.target.styles = {...paperStyle,...SelectItem}
+				tickets.push(
+					{
+						Seeting:Seeting,
+						ScreeningID:id
+					}
+				)
+			} else {
+				event.target.styles = {...paperStyle,...SeatingValid}
+				tickets = tickets.filter(x => x.Seeting!==Seeting)
+			}
+			
+			
+		}
+
 	}
 
 	//const classes = useStyles();
@@ -82,15 +115,21 @@ function SeanceDetailsView(props) {
 		for(let j=0;j<11;j++) {
 			if(j===0) {
 				row.push(
-					<Grid key={i*10+j} item  xs={0.2}  >
+					<Grid key={`0 ${i*10+j}`} item  xs={0.2}  >
 						<Paper variant='outlined' style={rowStyle}>{String.fromCharCode(65+i)}</Paper>
 					</Grid>
 				)
 			}
 			else {
+				let style = {};
+				if(isSeatingValid(i*10+j)) {
+					style = {...paperStyle,...SeatingValid}
+				} else {
+					style = {...paperStyle,...SeatingInValid}
+				}
 				row.push(
 					<Grid key={i*10+j} item  xs={0.2} >
-						<Paper component={'button'}  key={`0${i*10+j}`} style={paperStyle} >{j==10?j:`${j}`} </Paper>
+						<Paper component={'button'}  data-key={i*10+j} isValid={isSeatingValid(i*10+j)}  key={i*10+j-1} style={style} onClick={e => onSeetingClick(e,isSeatingValid(i*10+j))}>{j} </Paper>
 					</Grid>
 				)
 			}
