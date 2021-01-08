@@ -15,16 +15,16 @@ const instance = axios.create({
 
 // these are not necessary, but async action will look cleaner thanks to them
 // parenthesis are necessary when you want to return an object like this (without explicitly writing return)
-const getHallsRequest = () => ({
+export const getHallsRequest = () => ({
     type: hallsActions.GET_HALLS_REQUEST,
 });
 
-const getHallsSuccess = halls => ({
+export const getHallsSuccess = halls => ({
     type: hallsActions.GET_HALLS_SUCCES,
     payload: halls,
 });
 
-const getHallsFailure = error => ({
+export const getHallsFailure = error => ({
     type: hallsActions.GET_HALLS_FAILURE,
     payload: error,
 });
