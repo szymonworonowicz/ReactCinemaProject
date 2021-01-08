@@ -22,11 +22,12 @@ namespace NetCoreAPI
             var host = CreateHostBuilder(args).Build();
 
             CreateDb(host);
+            //t.Start();
 
-            host.Run();
+             host.Run();
         }
 
-        private static async Task CreateDb(IHost host)
+        private static  void CreateDb(IHost host)
         {
             using (var scope = host.Services.CreateScope())
             {
@@ -38,18 +39,17 @@ namespace NetCoreAPI
 
                     context.Database.EnsureCreated();
 
-                    if (await context.Halls.AnyAsync() == false)
+                    if (context.Halls.Any() == false)
                     {
                         List<Hall> halls = new List<Hall>();
                         Random rand = new Random();
                         for (int i = 0; i < 10; i++)
                         {
-                            halls.Add(new Hall { Capacity = rand.Next(50, 90) });
+                            halls.Add(new Hall { Capacity = rand.Next(5, 10)*10 });
                         }
 
-                        await context.Halls.AddRangeAsync(halls);
-                        await context.SaveChangesAsync();
-
+                        context.Halls.AddRange(halls);
+                        context.SaveChanges();
                         List<Film> films = new List<Film>();
 
                         string json = "";
@@ -60,20 +60,20 @@ namespace NetCoreAPI
 
                         films = JsonSerializer.Deserialize<List<Film>>(json);
 
-                        await context.Films.AddRangeAsync(films);
-                        await context.SaveChangesAsync();
+                        context.Films.AddRange(films);
+                        context.SaveChanges();
 
                         List<Screening> screenings = new List<Screening>();
                         // generowanie seansow
                         for (int i = 0; i < 10; i++)
                         {
-                            var StartTime = new DateTime(2021,rand.Next(1,12),rand.Next(1,28),rand.Next(8,22),rand.Next(1,6)*10,0);
-                            screenings.Add( new Screening { FilmId = rand.Next(0, 20), HallId = rand.Next(0, 10), StartTime = StartTime});
+                            var StartTime = new DateTime(2021,rand.Next(1,12),rand.Next(1,28),rand.Next(8,22),rand.Next(1,5)*10,0);
+                            screenings.Add( new Screening { FilmId = rand.Next(1, 19), HallId = rand.Next(1, 9), StartTime = StartTime});
                         }
 
-                        await context.Screenings.AddRangeAsync(screenings);
-                        await context.SaveChangesAsync();
-
+                        context.Screenings.AddRange(screenings);
+                        context.SaveChanges();
+ 
                     }
                 }
                 catch (InvalidOperationException e)
