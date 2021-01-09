@@ -1,7 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SeatPicker from 'react-seat-picker';
 
-function SeatPickerForm() {
+function SeatPickerForm(props) {
+    const { screening } = props;
+
     const addSeatCallback = ({ row, number, id }, addCb) => {
         console.log('zaznacz jako wybrane');
         console.log(`rzad ${row} fotel numer ${number} o id ${id}`);
@@ -103,6 +106,24 @@ function SeatPickerForm() {
             />
         </>
     );
+}
+
+SeatPickerForm.propTypes = {
+    screening: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        filmId: PropTypes.number.isRequired,
+        hallId: PropTypes.number.isRequired,
+        startTime: PropTypes.string.isRequired,
+        hall: PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            capacity: PropTypes.number.isRequired,
+        }),
+        tickets: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            screeningId: PropTypes.number.isRequired,
+            seeting: PropTypes.number.isRequired,
+        })),
+    })
 }
 
 export default SeatPickerForm;
