@@ -5,7 +5,7 @@ import SeatPickerForm from '../components/SeatPickerForm';
 
 function NewSeanceDetailsView(props) {
 	const id = props.match.params.id;
-	// moze push state po prostu damy i tyle
+	const screening = props.location.state.screening;
 
 	return (
 		<>
@@ -17,6 +17,10 @@ function NewSeanceDetailsView(props) {
 					textTransform: 'uppercase'
 				}}>Szczegóły seansu numer {id}</Typography>
 				{/* seance details */}
+				<p>Film: {screening.film.title}</p>
+				<p>Czas rozpoczęcia: {screening.startTime}</p>
+				<p>Ilość miejsc: {screening.hall.capacity}</p>
+				<p>Ilość dostępnych biletów: {screening.hall.capacity - screening.tickets.length}</p>
 				<SeatPickerForm />
 			</Container>
 		</>
