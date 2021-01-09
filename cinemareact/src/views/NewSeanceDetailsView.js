@@ -21,7 +21,7 @@ function NewSeanceDetailsView(props) {
 				<p>Czas rozpoczęcia: {screening.startTime}</p>
 				<p>Ilość miejsc: {screening.hall.capacity}</p>
 				<p>Ilość dostępnych biletów: {screening.hall.capacity - screening.tickets.length}</p>
-				<SeatPickerForm />
+				<SeatPickerForm screening={screening} />
 			</Container>
 		</>
 	);
