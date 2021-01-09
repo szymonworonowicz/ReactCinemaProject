@@ -21,12 +21,12 @@ function SeatPickerForm(props) {
         removeCb(row, number, "Click to reserve");
     }
 
-    const testTickets = [
-        { id: 1, screeningId: 1, number: 15 },
-        { id: 2, screeningId: 3, number: 12 },
-        { id: 3, screeningId: 5, number: 5 },
-        { id: 4, screeningId: 2, number: 34 },
-    ]
+    // const testTickets = [
+    //     { id: 1, screeningId: 1, number: 15 },
+    //     { id: 2, screeningId: 3, number: 12 },
+    //     { id: 3, screeningId: 5, number: 5 },
+    //     { id: 4, screeningId: 2, number: 34 },
+    // ]
 
     // const rows = [
     //     [
@@ -49,17 +49,17 @@ function SeatPickerForm(props) {
     //     ],
     // ]
 
-    const testRows = [];
+    const hall = [];
     let currentRow = [];
-    const HALL_CAPACITY = 70;
-    for(let i = 1; i <= HALL_CAPACITY; i++) {
+
+    for(let i = 1; i <= screening.hall.capacity; i++) {
         if(i % 10 === 1 && i !== 1) {
-            testRows.push(currentRow);
+            hall.push(currentRow);
             currentRow = [];
         }
 
         let seatData = null;
-        const reservedTicket = testTickets.find(ticket => ticket.number === i);
+        const reservedTicket = screening.tickets.find(ticket => ticket.number === i);
 
         let currentSeatNumber;
         if(i <= 10) {
@@ -96,7 +96,7 @@ function SeatPickerForm(props) {
             <SeatPicker
                 addSeatCallback={addSeatCallback}
                 removeSeatCallback={removeSeatCallback}
-                rows={testRows}
+                rows={hall}
                 maxReservableSeats={1}
                 alpha
                 visible
