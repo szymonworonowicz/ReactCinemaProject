@@ -59,7 +59,7 @@ function SeatPickerForm(props) {
         }
 
         let seatData = null;
-        const reservedTicket = screening.tickets.find(ticket => ticket.number === i);
+        const reservedTicket = screening.tickets.find(ticket => ticket.seeting === i);
 
         let currentSeatNumber;
         if(i <= 10) {
@@ -120,7 +120,7 @@ SeatPickerForm.propTypes = {
         }),
         tickets: PropTypes.arrayOf(PropTypes.shape({
             id: PropTypes.number.isRequired,
-            screeningId: PropTypes.number.isRequired,
+            screeningID: PropTypes.number.isRequired,
             seeting: PropTypes.number.isRequired,
         })),
     })
