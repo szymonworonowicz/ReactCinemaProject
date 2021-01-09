@@ -87,7 +87,17 @@ class ScreeningListItem extends React.Component {
                                 style={{ display: 'flex', justifyContent: 'flex-start' }}
                             >
                                 <ShopRounded/>
-                                <Link to={{ pathname:"/seance/"+screening.id,  params:{id: screening.id}}} style={{ marginLeft: '8px', textDecoration: 'none',color: 'black'}} > Kup bilet </Link>
+                                <Link 
+                                    to={{ 
+                                        pathname: "/seance/" + screening.id,
+                                        state: {
+                                            screening,
+                                        }
+                                    }}
+                                    style={{ marginLeft: '8px', textDecoration: 'none',color: 'black'}}
+                                >
+                                    Kup bilet
+                                </Link>
                             </Button>
                         </div>
                     </Popover>
