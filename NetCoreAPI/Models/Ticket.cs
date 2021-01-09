@@ -6,6 +6,5 @@ namespace NetCoreAPI.Models
         public int Seeting { get; set; }
         public int ScreeningID { get; set; }
 
-        public virtual Screening Screening { get; set; }
     }
 }
