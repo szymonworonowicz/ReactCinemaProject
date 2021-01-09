@@ -1,53 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SeatPicker from 'react-seat-picker';
 
 function SeatPickerForm(props) {
     const { screening } = props;
 
-    const addSeatCallback = ({ row, number, id }, addCb) => {
-        console.log('zaznacz jako wybrane');
-        console.log(`rzad ${row} fotel numer ${number} o id ${id}`);
+    const history = useHistory();
+    const [selectedTicket, setSelectedTicket] = useState(-1);
 
-        const newTicketNumber = id;
-        
-        addCb(row, number, id, "You have choosen this seat");
+    const addSeatCallback = async ({ row, number, id }, addCb) => {
+        addCb(row, number, id, "Click again to remove reservation.");
+        if(selectedTicket === -1) {
+            setSelectedTicket(id);
+        }
     }
 
     const removeSeatCallback = ({ row, number, id }, removeCb) => {
-        console.log('zanznacz jako usuniete');
-        console.log(`rzad ${row} fotel numer ${number} o id ${id}`);
-
         removeCb(row, number, "Click to reserve");
+        setSelectedTicket(-1);
     }
 
-    // const testTickets = [
-    //     { id: 1, screeningId: 1, number: 15 },
-    //     { id: 2, screeningId: 3, number: 12 },
-    //     { id: 3, screeningId: 5, number: 5 },
-    //     { id: 4, screeningId: 2, number: 34 },
-    // ]
-
-    // const rows = [
-    //     [
-    //         // number is number showed for seat
-    //         { id: 1, number: 1, isSelected: true, tooltip: "Reserved by you" },
-    //         { id: 2, number: 2, tooltip: "Cost: 15$" },
-    //         // null is for spaces between seats
-    //         null,
-    //         {
-    //           id: 3,
-    //           number: "3",
-    //           isReserved: true,
-    //           orientation: "east",
-    //           tooltip: "Reserved by Rogger"
-    //         },
-    //         { id: 4, number: "4", orientation: "west" },
-    //         null,
-    //         { id: 5, number: 5 },
-    //         { id: 6, number: 6 }
-    //     ],
-    // ]
+    const buyTicket = () => {
+        if(selectedTicket !== -1) {
+            axios.post(`${process.env.REACT_APP_SERVER_BASE_URL}/ticket`, {
+                screeningID: screening.id,
+                seeting: selectedTicket,
+            })
+            .then(() => {
+                // redirect
+                history.push('/');
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        } else {
+            // display message that you have to select ticket
+        }
+    }
 
     const hall = [];
     let currentRow = [];
@@ -104,6 +95,7 @@ function SeatPickerForm(props) {
                 loading={false}
                 continuous
             />
+            <button onClick={buyTicket}>Kup bilet</button>
         </>
     );
 }
