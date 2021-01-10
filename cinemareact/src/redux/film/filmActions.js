@@ -80,7 +80,7 @@ export const addFilm = (film) => {
         const finalData = JSON.parse(JSON.stringify(data)).film;
         dispatch(addFilmSuccess(finalData));
       })
-      .catch((err) => {
+      .catch(err => {
         const { message } = err;
         dispatch(addFilmFailure(message));
       });
@@ -110,7 +110,7 @@ export const deleteFilm = (id) => {
       .then(() => {
         dispatch(deleteFilmSuccess(id));
       })
-      .catch((err) => {
+      .catch(err => {
         const { message } = err;
         dispatch(deleteFilmFailure(message));
       });

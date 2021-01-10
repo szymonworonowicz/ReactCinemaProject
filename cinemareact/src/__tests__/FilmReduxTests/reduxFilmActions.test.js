@@ -34,6 +34,7 @@ describe('filmactions', () => {
 
         expect(actions.getFilmsSuccess(films)).toEqual(expectedAction)
     })
+
     it('should create an action addFilmSuccess', () => {
             const newFilm = {
                 id: 3,
