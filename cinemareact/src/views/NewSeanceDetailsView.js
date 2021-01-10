@@ -28,6 +28,7 @@ function NewSeanceDetailsView(props) {
 					/>
 					<CardContent>
 						<Typography variant="body1">Czas rozpoczęcia: {screening.startTime}</Typography>
+						<Typography variant="body1">Sala numer: {screening.hallId}</Typography>
 						<Typography variant="body1">Ilość miejsc: {screening.hall.capacity}</Typography>
 						<Typography variant="body1">Dostępne bilety: {screening.hall.capacity - screening.tickets.length}</Typography>
 					</CardContent>

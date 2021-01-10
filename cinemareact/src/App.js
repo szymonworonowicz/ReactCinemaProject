@@ -15,7 +15,7 @@ function App() {
         <Route exact path="/" component={SeancesView} />
         <Route path="/seance/:id" component={SeanceDetailsView} />
         <Route path="/movies" component={MoviesView} />
-        <Route path="/rooms" component={RoomsView} />
+        {/* <Route path="/rooms" component={RoomsView} /> */}
       </BrowserRouter>
 
       <NotificationContainer />
