@@ -1,5 +1,7 @@
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { NotificationContainer } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 import store from './redux/store';
 import SeancesView from './views/SeancesView';
 import MoviesView from './views/MoviesView';
@@ -15,6 +17,8 @@ function App() {
         <Route path="/movies" component={MoviesView} />
         <Route path="/rooms" component={RoomsView} />
       </BrowserRouter>
+
+      <NotificationContainer />
     </Provider>
   );
 }
