@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Button, Typography } from '@material-ui/core';
+import { NotificationManager } from 'react-notifications';
 import SeatPicker from 'react-seat-picker';
 
 const ContainerStyle = {
@@ -38,12 +39,13 @@ function SeatPickerForm(props) {
             .then(() => {
                 // redirect
                 history.push('/');
+                NotificationManager.success('Bilet został zakupiony. Dziękujemy!', '', 5000);
             })
             .catch(err => {
                 console.log(err);
             });
         } else {
-            // display message that you have to select ticket
+            NotificationManager.warning('Aby kupić bilet musisz wybrać miejsce', '', 5000);
         }
     }
 
