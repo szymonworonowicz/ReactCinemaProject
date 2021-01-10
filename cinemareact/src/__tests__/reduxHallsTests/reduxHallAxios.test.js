@@ -47,4 +47,30 @@ describe('halls axios',() => {
             expect(store.getActions()).toEqual(expected);
           });
     })
+
+    it('should catch error when data is not received',async () => {
+
+      const error = new Error('test')
+      
+
+      const expected = [
+          {
+            type: types.GET_HALLS_REQUEST,
+          },
+          {
+            type: types.GET_HALLS_FAILURE,
+            payload: error.message,
+          },
+        ];
+
+        mockAxios.get.mockRejectedValue(
+          error
+        );
+
+        const store = mockStore({ halls: [] });
+
+        return store.dispatch(actions.getHalls()).then(() => {
+          expect(store.getActions()).toEqual(expected);
+        });
+  })
 })
