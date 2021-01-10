@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Button, Typography } from '@material-ui/core';
 import SeatPicker from 'react-seat-picker';
+
+const ContainerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+};
 
 function SeatPickerForm(props) {
     const { screening } = props;
@@ -82,8 +89,13 @@ function SeatPickerForm(props) {
     }
 
     return (
-        <>
-            <div>Seat picker</div>
+        <div style={ContainerStyle}>
+            <Typography 
+                variant="h5"
+                style={{ marginBottom: '32px' }}
+            >
+                Wybierz miejsce
+            </Typography>
             <SeatPicker
                 addSeatCallback={addSeatCallback}
                 removeSeatCallback={removeSeatCallback}
@@ -95,8 +107,12 @@ function SeatPickerForm(props) {
                 loading={false}
                 continuous
             />
-            <button onClick={buyTicket}>Kup bilet</button>
-        </>
+            <Button
+                variant="contained"
+                color="primary"
+                style={{ marginTop: '32px' }}
+                onClick={buyTicket}>Kup bilet</Button>
+        </div>
     );
 }
 
