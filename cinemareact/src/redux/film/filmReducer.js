@@ -6,7 +6,7 @@ const initialState = {
     error: '',
 };
 
-const filmReducer = (state = initialState, action) => {
+export const filmReducer = (state = initialState, action) => {
     switch(action.type) {
         case filmActions.GET_FILMS_REQUEST:
         case filmActions.ADD_FILM_REQUEST:
