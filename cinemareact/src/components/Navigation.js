@@ -17,9 +17,10 @@ function Navigation() {
 				<Button color="inherit">
 					<Link to="/movies" style={linkStyle}>Filmy</Link>
 				</Button>
-				<Button color="inherit">
+				{/* rooms view is not needed apparently */}
+				{/* <Button color="inherit">
 					<Link to="/rooms" style={linkStyle}>Sale</Link>
-				</Button>
+				</Button> */}
 			</Toolbar>
 		</AppBar>
 	);
