@@ -1,7 +1,11 @@
 import React from 'react';
-import { Container, Typography } from '@material-ui/core';
+import { Container, Card, CardHeader, CardContent, Typography } from '@material-ui/core';
 import Navigation from '../components/Navigation';
 import SeatPickerForm from '../components/SeatPickerForm';
+
+const CardStyle = {
+	margin: '32px 0',
+};
 
 function NewSeanceDetailsView(props) {
 	const id = props.match.params.id;
@@ -16,11 +20,19 @@ function NewSeanceDetailsView(props) {
 					borderBottom: '1px solid #DDD',
 					textTransform: 'uppercase'
 				}}>Szczegóły seansu numer {id}</Typography>
-				{/* seance details */}
-				<p>Film: {screening.film.title}</p>
-				<p>Czas rozpoczęcia: {screening.startTime}</p>
-				<p>Ilość miejsc: {screening.hall.capacity}</p>
-				<p>Ilość dostępnych biletów: {screening.hall.capacity - screening.tickets.length}</p>
+
+				<Card style={CardStyle}>
+					<CardHeader
+						title={screening.film.title}
+						style={{ marginBottom: '0', paddingBottom: '0' }}
+					/>
+					<CardContent>
+						<Typography variant="body1">Czas rozpoczęcia: {screening.startTime}</Typography>
+						<Typography variant="body1">Ilość miejsc: {screening.hall.capacity}</Typography>
+						<Typography variant="body1">Dostępne bilety: {screening.hall.capacity - screening.tickets.length}</Typography>
+					</CardContent>
+				</Card>
+
 				<SeatPickerForm screening={screening} />
 			</Container>
 		</>
