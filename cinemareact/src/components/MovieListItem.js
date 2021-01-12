@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardContent, Typography, IconButton, Button, Popover } from '@material-ui/core';
-import { MoreVert, Edit, Delete } from '@material-ui/icons';
+import { MoreVert, Edit, Delete, Grade } from '@material-ui/icons';
 import { deleteFilm } from '../redux/film/filmActions';
 
 const CardStyle = {
@@ -81,6 +81,14 @@ class MovieListItem extends React.Component {
                             >
                                 <Edit/>
                                 <span style={{ marginLeft: '8px' }}>Edytuj</span>
+                            </Button>
+                            <Button
+                                style={{ display: 'flex', justifyContent: 'flex-start' }}
+                            >
+                                {/* we will have to show chart as dialog like form or just create another view */}
+                                {/* i think dialog is enough */}
+                                <Grade/>
+                                <span style={{ marginLeft: '8px' }}>Popularność</span>
                             </Button>
                             <Button 
                                 style={{ display: 'flex', justifyContent: 'flex-start' }}
