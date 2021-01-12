@@ -11,6 +11,7 @@ import { DateTimePicker } from "formik-material-ui-pickers";
 import { Button, MenuItem } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import { pl } from "date-fns/locale";
 import * as Yup from "yup";
 import {
   addScreening,
@@ -103,7 +104,7 @@ function ScreeningForm(props) {
               );
             })}
           </Field>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils} locale={pl}>
             <Field
               component={DateTimePicker}
               id="time"
