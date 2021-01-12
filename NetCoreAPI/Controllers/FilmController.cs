@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,7 @@ namespace NetCoreAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> getFilm([FromRoute] int id)
         {
-            if (id !=0)
+            if (id != 0)
             {
                 var films = await Context.Films.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -46,7 +47,7 @@ namespace NetCoreAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> updateFilm([FromBody]Film film)
+        public async Task<IActionResult> updateFilm([FromBody] Film film)
         {
             if (await Context.Films.AnyAsync(x => x.Id == film.Id))
             {
@@ -67,7 +68,7 @@ namespace NetCoreAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> addFilm([FromBody]Film film)
+        public async Task<IActionResult> addFilm([FromBody] Film film)
         {
             if (await Context.Films.AnyAsync(x => x.Title == film.Title) == false)
             {
@@ -75,14 +76,14 @@ namespace NetCoreAPI.Controllers
 
                 await Context.SaveChangesAsync();
 
-                return StatusCode(201,new {film = film});
+                return StatusCode(201, new { film = film });
             }
 
             return BadRequest("Film istnieje juz w bazie");
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> deleteFilm([FromRoute]int? id)
+        public async Task<IActionResult> deleteFilm([FromRoute] int? id)
         {
             if (id.HasValue)
             {
@@ -100,6 +101,27 @@ namespace NetCoreAPI.Controllers
 
             return BadRequest("Nie ma takiego filmu w bazie");
 
+        }
+
+        [HttpGet("popularity/{id}")]
+        public async Task<IActionResult> getFilmPopularity([FromRoute] int? id)
+        {
+            if (id.HasValue)
+            {
+                var elems = Context.Screenings.Include(x => x.Tickets)
+                                                    .Where(x => x.FilmId == id.Value)
+                                                    .ToList()
+                                                    .GroupBy(x => x.StartTime.Date)
+                                                    .Select(g => new  {
+                                                        date= g.Key.Date,
+                                                        popularity=g.Sum(x => x.Tickets == null?0:x.Tickets.Count)
+                                                    })
+                                                    .OrderBy(x => x.date);
+
+                return Ok(new { data = elems });
+
+            }
+            return BadRequest("brak filmu w bazie");
         }
     }
 }
