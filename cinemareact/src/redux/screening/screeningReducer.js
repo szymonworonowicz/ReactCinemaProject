@@ -6,7 +6,7 @@ const initialState = {
     error: '',
 };
 
-const screeningReducer = (state = initialState, action) => {
+export const screeningReducer = (state = initialState, action) => {
     switch(action.type) {
         case screeningAction.GET_SCREENINGS_REQUEST:
         case screeningAction.ADD_SCREENING_REQUEST:
