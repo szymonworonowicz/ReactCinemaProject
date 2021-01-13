@@ -17,6 +17,7 @@ class MoviesView extends React.Component {
 	state = {
 		openModal: false,
 		formInitValues: {},
+		showChart: false,
 	};
 
 	closeModal = () => {
@@ -47,6 +48,18 @@ class MoviesView extends React.Component {
 		this.openModal(false);
 	}
 
+	showChart = () => {
+		this.setState({
+			showChart: true,
+		});
+	}
+
+	hideChart = () => {
+		this.setState({
+			showChart: false,
+		});
+	}
+
 	render() {
 		return (
 			<>
@@ -65,6 +78,19 @@ class MoviesView extends React.Component {
 						/>
 					</DialogContent>
 				</Dialog>
+
+				<Dialog
+					open={this.state.showChart}
+					maxWidth="sm"
+					fullWidth={true}
+					onBackdropClick={this.hideChart}
+					onEscapeKeyDown={this.hideChart}
+				>
+					<DialogTitle>Popularność filmu</DialogTitle>
+					<DialogContent>
+						<p>Here will be popularity chart</p>
+					</DialogContent>
+				</Dialog>
 	
 				<Navigation />
 	
@@ -75,7 +101,10 @@ class MoviesView extends React.Component {
 						textTransform: 'uppercase'
 					}}>Dostępne filmy</Typography>
 	
-					<MoviesList changeFormValuesFn={this.changeFormInitValues} />
+					<MoviesList
+						changeFormValuesFn={this.changeFormInitValues}
+						showChartFn={this.showChart}
+					/>
 	
 					<Fab
 						onClick={this.openModal}

@@ -84,6 +84,7 @@ class MovieListItem extends React.Component {
                             </Button>
                             <Button
                                 style={{ display: 'flex', justifyContent: 'flex-start' }}
+                                onClick={this.props.showChartFn}
                             >
                                 {/* we will have to show chart as dialog like form or just create another view */}
                                 {/* i think dialog is enough */}
@@ -96,14 +97,6 @@ class MovieListItem extends React.Component {
                             >
                                 <Delete />
                                 <span style={{ marginLeft: '8px' }}>Usuń</span>
-                            </Button>
-                            <Button
-                                style={{ display: 'flex', justifyContent: 'flex-start' }}
-                            >
-                                {/* we will have to show chart as dialog like form or just create another view */}
-                                {/* i think dialog is enough */}
-                                <Grade/>
-                                <span style={{ marginLeft: '8px' }}>Popularność</span>
                             </Button>
                         </div>
                     </Popover>
@@ -122,6 +115,7 @@ const mapDispatchToProps = dispatch => {
 
 MovieListItem.propTypes = {
     changeFormValuesFn: PropTypes.func.isRequired,
+    showChartFn: PropTypes.func.isRequired,
     deleteFilmFn: PropTypes.func.isRequired,
     film: PropTypes.shape({
         // maybe here we can add custom props function to check for minimal length or smth like this

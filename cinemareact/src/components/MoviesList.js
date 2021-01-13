@@ -18,7 +18,7 @@ function MoviesList(props) {
     // this grabs these values from redux state
     const { loading, films, error } = useSelector(state => state.filmsState);
     const dispatch = useDispatch();
-    const { changeFormValuesFn } = props;
+    const { changeFormValuesFn, showChartFn } = props;
 
     useEffect(() => {
         dispatch(getFilms());
@@ -35,6 +35,7 @@ function MoviesList(props) {
                     key={film.id}
                     film={film}
                     changeFormValuesFn={changeFormValuesFn}
+                    showChartFn={showChartFn}
                 />
             ))}
         </List>
@@ -43,6 +44,7 @@ function MoviesList(props) {
 
 MoviesList.propTypes = {
     changeFormValuesFn: PropTypes.func.isRequired,
+    showChartFn: PropTypes.func.isRequired,
 };
 
 export default MoviesList;
