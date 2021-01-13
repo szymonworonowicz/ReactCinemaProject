@@ -30,13 +30,21 @@ export const getScreeningsFailure = error => ({
 });
 
 // our async action
-export const getScreenings = () => {
+export const getScreenings = (type = '', date = '') => {
     return function(dispatch) {
         dispatch(getScreeningsRequest());
 
-        return instance.get('http://localhost:5000/screening')
+        let queryString = '';
+        if(type !== '' && date !== '') {
+            const dateString = `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? '0' : ''}${date.getMonth() + 1}-${date.getDate() < 10 ? '0' : ''}${date.getDate()}T${date.getHours() < 10 ? '0' : ''}${date.getHours()}:${date.getMinutes() < 10 ? '0' : ''}${date.getMinutes()}:${date.getSeconds() < 10 ? '0' : ''}${date.getSeconds()}`;
+
+            queryString = `?${type === 'today' ? 'today' : 'current'}=${dateString}`;
+        }
+
+        return instance.get(`http://localhost:5000/screening${queryString}`)
             .then(resp => {
                 const { screenings } = resp.data; // shorthand for const data = resp.data;
+                console.log(screenings);
                 dispatch(getScreeningsSuccess(screenings));
             })
             .catch(err => {

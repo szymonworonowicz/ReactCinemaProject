@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { List, Container, Checkbox, FormControlLabel } from '@material-ui/core';
@@ -27,28 +27,43 @@ function ScreeningList(props) {
     const dispatch = useDispatch();
     const { changeFormValuesFn } = props;
 
+    const [todayChecked, setTodayChecked] = useState(false);
+    const [currentChecked, setCurrentChecked] = useState(false);
+
     useEffect(() => {
         dispatch(getScreenings());
     }, [dispatch]);
 
     const handleChange = e => {
-        // console.log(e.target.name);
-        // console.log(e.target.checked);
-
         if(e.target.name === 'today') {
-            if(e.target.checked) {
-                // today filter
+            if(!todayChecked) {
+                setTodayChecked(true);
+                setCurrentChecked(false);
+
+                dispatch(getScreenings('today', new Date()));
             } else {
-                // we need to check if the other is checked
-                // and according to that display relevant scrennings
-                // probably useState and boolean value
+                setTodayChecked(false);
+
+                if(currentChecked) {
+                    dispatch(getScreenings('current', new Date()));
+                } else {
+                    dispatch(getScreenings());
+                }
             }
         } else {
-            if(e.target.checked) {
-                // started films filter
+            if(!currentChecked) {
+                setCurrentChecked(true);
+                setTodayChecked(false);
+
+                dispatch(getScreenings('current', new Date()));
             } else {
-                // we need to check if the other is checked
-                // and according to that display relevant scrennings
+                setCurrentChecked(false);
+
+                if(todayChecked) {
+                    dispatch(getScreenings('today', new Date()));
+                } else {
+                    dispatch(getScreenings());
+                }
             }
         }
     }
@@ -65,6 +80,7 @@ function ScreeningList(props) {
                         <Checkbox
                             color="primary"
                             name="today"
+                            checked={todayChecked}
                             onChange={handleChange}
                         />
                     }
@@ -75,6 +91,7 @@ function ScreeningList(props) {
                         <Checkbox
                             color="primary"
                             name="started"
+                            checked={currentChecked}
                             onChange={handleChange}
                         />
                     }
