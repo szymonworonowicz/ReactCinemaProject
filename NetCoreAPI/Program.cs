@@ -65,10 +65,24 @@ namespace NetCoreAPI
 
                         List<Screening> screenings = new List<Screening>();
                         // generowanie seansow
-                        for (int i = 0; i < 10; i++)
+                        for (int i = 0; i < 30; i++)
                         {
                             var StartTime = new DateTime(2021,rand.Next(1,12),rand.Next(1,28),rand.Next(8,22),rand.Next(1,5)*10,0);
-                            screenings.Add( new Screening { FilmId = rand.Next(1, 19), HallId = rand.Next(1, 9), StartTime = StartTime});
+                            var screening = new Screening { FilmId = rand.Next(1, 19), HallId = rand.Next(1, 9), StartTime = StartTime,Tickets = new List<Ticket>()};
+
+                            int ticketCount = rand.Next(2,30);
+                            for(int j=0;j<ticketCount;j++) {
+                                
+                                int seat = 0;
+                                do {
+                                    
+                                    seat = rand.Next(1,halls[screening.HallId-1].Capacity-1);
+                                }while(screening.Tickets.Any(x => x.Seeting == seat));
+
+                                screening.Tickets.Add(new Ticket{Seeting = seat});
+                            }
+
+                            screenings.Add(screening);
                         }
 
                         context.Screenings.AddRange(screenings);
