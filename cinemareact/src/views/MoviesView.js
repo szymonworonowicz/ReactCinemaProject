@@ -19,6 +19,7 @@ class MoviesView extends React.Component {
 		openModal: false,
 		formInitValues: {},
 		showChart: false,
+		filmId: -1,
 	};
 
 	closeModal = () => {
@@ -49,15 +50,17 @@ class MoviesView extends React.Component {
 		this.openModal(false);
 	}
 
-	showChart = () => {
+	showChart = filmId => {
 		this.setState({
 			showChart: true,
+			filmId,
 		});
 	}
 
 	hideChart = () => {
 		this.setState({
 			showChart: false,
+			filmId: -1,
 		});
 	}
 
@@ -89,7 +92,7 @@ class MoviesView extends React.Component {
 				>
 					<DialogTitle>Popularność filmu</DialogTitle>
 					<DialogContent>
-						<PopularityChart />
+						<PopularityChart filmId={this.state.filmId} />
 					</DialogContent>
 				</Dialog>
 	

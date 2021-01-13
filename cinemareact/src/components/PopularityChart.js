@@ -1,27 +1,63 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, Legend } from 'recharts';
 
-function PopularityChart() {
-    const data = [
-        {name: 'Page A', uv: 4000, pv: 2400},
-        {name: 'Page B', uv: 3000, pv: 1398},
-        {name: 'Page C', uv: 2000, pv: 9800},
-        {name: 'Page D', uv: 2780, pv: 3908},
-        {name: 'Page E', uv: 1890, pv: 4800},
-        {name: 'Page F', uv: 2390, pv: 3800},
-        {name: 'Page G', uv: 3490, pv: 4300},
-  ];
+class PopularityChart extends React.Component {
+    state = {
+        popularity: [],
+    }
 
-    return (
-        <BarChart width={600} height={300} data={data}
-            margin={{top: 5, right: 30, left: 20, bottom: 5}}
-        >
-            <XAxis dataKey="name"/>
-            <YAxis/>
-            <Legend />
-            <Bar dataKey="pv" barSize={20} fill="#8884d8" />
-        </BarChart>
-    );
+    componentDidMount() {
+        axios.get(`http://localhost:5000/film/popularity/${this.props.filmId}`)
+            .then(resp => {
+                const { data } = resp;
+                const popularity = data.data;
+                
+                this.setState({
+                    popularity,
+                });
+            })
+            .catch(err => {
+                console.log(err.message);
+            });
+    }
+
+    prepareData = () => {
+        const chartData = [];
+
+        this.state.popularity.forEach(day => {
+            const rawDate = new Date(day.date);
+            const adjustedDate = `${rawDate.getDate() < 10 ? '0' : ''}${rawDate.getDate()}.${rawDate.getMonth() + 1 < 10 ? '0' : ''}${rawDate.getMonth() + 1}.${rawDate.getFullYear()}`;
+
+            const bar = {
+                name: adjustedDate,
+                tickets: day.popularity,
+            };
+            chartData.push(bar);
+        });
+
+        return chartData;
+    }
+
+    render() {
+        const data = this.prepareData();
+    
+        return (
+            <BarChart width={550} height={300} data={data}
+                margin={{top: 5, right: 30, left: 30, bottom: 5}}
+            >
+                <XAxis dataKey="name"/>
+                <YAxis/>
+                <Legend />
+                <Bar dataKey="tickets" barSize={20} fill="#8884d8" />
+            </BarChart>
+        );
+    }
 }
+
+PopularityChart.propTypes = {
+    filmId: PropTypes.number.isRequired,
+};
 
 export default PopularityChart;

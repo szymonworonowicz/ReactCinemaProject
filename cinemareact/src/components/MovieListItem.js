@@ -84,7 +84,7 @@ class MovieListItem extends React.Component {
                             </Button>
                             <Button
                                 style={{ display: 'flex', justifyContent: 'flex-start' }}
-                                onClick={this.props.showChartFn}
+                                onClick={() => this.props.showChartFn(film.id)}
                             >
                                 {/* we will have to show chart as dialog like form or just create another view */}
                                 {/* i think dialog is enough */}
