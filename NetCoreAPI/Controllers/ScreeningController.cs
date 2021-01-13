@@ -70,6 +70,7 @@ namespace NetCoreAPI.Controllers
         {
             if (await Context.Screenings.AnyAsync(x => x.StartTime == screening.StartTime && x.HallId==screening.HallId ) == false)
             {
+                screening.StartTime = screening.StartTime.ToLocalTime();
                 await Context.Screenings.AddAsync(screening);
 
                 await Context.SaveChangesAsync();
