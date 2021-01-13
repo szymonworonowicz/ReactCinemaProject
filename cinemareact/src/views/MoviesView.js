@@ -4,6 +4,7 @@ import { Add } from '@material-ui/icons';
 import MovieForm from '../components/MovieForm';
 import Navigation from '../components/Navigation';
 import MoviesList from '../components/MoviesList';
+import PopularityChart from '../components/PopularityChart';
 
 const isObjectEmpty = obj => Object.keys(obj).length === 0;
 
@@ -88,7 +89,7 @@ class MoviesView extends React.Component {
 				>
 					<DialogTitle>Popularność filmu</DialogTitle>
 					<DialogContent>
-						<p>Here will be popularity chart</p>
+						<PopularityChart />
 					</DialogContent>
 				</Dialog>
 	
