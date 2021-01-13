@@ -89,6 +89,7 @@ function SeatPickerForm(props) {
         }
         currentRow.push(seatData);
     }
+    hall.push(currentRow);
 
     return (
         <div style={ContainerStyle}>
