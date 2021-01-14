@@ -126,4 +126,6 @@ describe('filmactions', () => {
         expect(actions.updateScreeningFailure(error)).toEqual(expectedAction)
 
     })
+
+   
 })

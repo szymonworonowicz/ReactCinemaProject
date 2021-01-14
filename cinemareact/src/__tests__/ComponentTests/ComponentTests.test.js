@@ -3,20 +3,13 @@ import React from 'react'
 import * as Enzyme from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import App from '../../App'
-import thunk from "redux-thunk";
-import configureMockStore from "redux-mock-store";
-import {MemoryRouter} from 'react-router'
-import { List } from '@material-ui/core';
 import MovieList from '../../components/MoviesList'
-import Loader from '../../components/Loader'
 import ScreeningList from '../../components/ScreeningList'
-import ScreeningListItem from '../../components/ScreeningListItem'
 import { Provider } from 'react-redux';
 import store from '../../redux/store';
 import SeatPickerForm from'../../components/SeatPickerForm'
 
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
+
 
 describe('App',() => {
 

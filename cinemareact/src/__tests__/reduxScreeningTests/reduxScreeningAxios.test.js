@@ -282,4 +282,67 @@ describe('halls axios', () => {
             expect(store.getActions()).toEqual(expected);
         });
     });
+    it("should create an action GetScreeningSuccess when filter data is received", async () => {
+        const screenings = [{
+            id: 1,
+            time: new Date(2021,1,25,0,0,0,0),
+            hallId: 1
+        },
+        {
+            id: 2,
+            time: new Date(2021,1,25,0,0,0,0),
+            hallId: 2
+        },
+    ];
+
+        const expected = [{
+                type: types.GET_SCREENINGS_REQUEST,
+            },
+            {
+                type: types.GET_SCREENINGS_SUCCES,
+                payload: screenings,
+            },
+        ];
+
+        mockAxios.get.mockResolvedValue({
+            data: {
+                screenings,
+            },
+        });
+
+        //mockAxios.get.mockResolvedValue(() => Promise.resolve({ data: films }));
+        const store = mockStore({
+            screenings: []
+        });
+
+        return store.dispatch(actions.getScreenings('today', new Date(2021,1,25,0,0,0,0))).then(() => {
+            expect(store.getActions()).toEqual(expected);
+        });
+    });
+
+    it("should throw  an error action GetScreeningFailure when filter data is received", async () => {
+        const error = new Error('test')
+
+        const expected = [{
+                type: types.GET_SCREENINGS_REQUEST,
+            },
+            {
+                type: types.GET_SCREENINGS_FAILURE,
+                payload: error.message,
+            },
+        ];
+
+        mockAxios.get.mockRejectedValue(
+            error
+        );
+
+        //mockAxios.get.mockResolvedValue(() => Promise.resolve({ data: films }));
+        const store = mockStore({
+            screenings: []
+        });
+
+        return store.dispatch(actions.getScreenings('today', new Date(2021,1,25,0,0,0,0))).then(() => {
+            expect(store.getActions()).toEqual(expected);
+        });
+    });
 });

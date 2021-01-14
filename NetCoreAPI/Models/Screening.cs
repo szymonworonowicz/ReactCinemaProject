@@ -6,7 +6,7 @@ namespace NetCoreAPI.Models
     public class Screening
     {
         public int Id { get; set; }
-        public DateTimeOffset StartTime { get; set; }
+        public DateTime StartTime { get; set; }
         public int FilmId { get; set; }
         public int HallId { get; set; }
 
