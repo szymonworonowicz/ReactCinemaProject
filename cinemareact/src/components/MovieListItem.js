@@ -59,7 +59,7 @@ class MovieListItem extends React.Component {
                     }}
                 />
                 <CardContent style={{ marginTop: '0' }}>
-                    <Typography variant="body1" style={{ marginBottom: '16px' }}>Czas trwania: {film.time} minut</Typography>
+                    <Typography variant="body1" style={{ marginBottom: '16px' }}>Czas trwania: {film.time} h</Typography>
                     <Typography variant="body1">{film.description}</Typography>
                     <Popover
                         open={this.state.anchorEl !== null}

@@ -26,10 +26,11 @@ namespace NetCoreAPI.Controllers
                 var screenings = await Context.Screenings.Include(x => x.Film)
                                                                         .Include(x => x.Hall)
                                                                         .Include(x => x.Tickets)
+                                                                        .Where(x => x.StartTime.Date>=DateTime.Now.Date)
                                                                         .ToListAsync();
                 if (current != default(DateTime))
                 {
-                    screenings = screenings.Where(x => x.StartTime <= current && x.StartTime.AddHours(x.Film.Time) >= current).ToList();
+                    screenings = screenings.Where(x => x.StartTime.Date == current.Date && x.StartTime <= current && x.StartTime.AddHours(x.Film.Time) >= current).ToList();
                 }
                 else if (today != default(DateTime))
                 {
